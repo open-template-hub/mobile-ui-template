@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Mobile UI Template</string>
+    <string name="facebook_app_id">519983235576809</string>
+    <string name="fb_login_protocol_scheme">fb519983235576809</string>
+    <string name="RNB_GOOGLE_PLAY_LICENSE_KEY">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArvMBtfdo+ey5RKkkYhP1yJmWCw3ezFJRTHVo9jyIwQ4T20yRjAD4oVj8Vs2PWKyd8ATvY5rDaw/Dto3edMbWAkHhdk56gsxtTIn/u8qyRmqDqsS0Wxlmk57XxhqwNkJKyK49dSo+/T22VTK8r/asAJQUh4af2mQ5NSs6jN6vjoPsKYZxDX0bqlciSNlTlRPupCWZRjdWYb+KbqYnwpTwrxRyV20gY/M/K2w+7tfiUpEIdWPV0b0+q4urgjFdwEv9NpWh5Ut42hOc1bS5WMtN2vjtkl07EIyR/79Lh8dlBFNsm9p14MV1jI76YOqT8ukVbfJ5I2U4Uz4lpnCc31snNwIDAQAB</string> 
+</resources>
