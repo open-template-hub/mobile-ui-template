@@ -4,7 +4,7 @@ import ProductList from '../../component/product-list/product-list.component';
 import {Product} from '../../interface/product.interface';
 import {styles} from './product-list.style';
 import Loading from '../../component/loading/loading.component';
-import I18n from '../../i18n/i18n';
+import Localization from '../../localization/i18n/i18n.localization';
 import {AnalyticsUtil} from '../../util/analytics.util';
 import {Screens} from '../../constant/screens.constant';
 import axios, {CancelTokenSource} from 'axios';
@@ -93,7 +93,7 @@ export default class ProductListScreen extends React.Component<Props, State> {
         ) : products && products.length > 0 ? (
           <ProductList products={products} isPremium={isPremium} />
         ) : (
-          <Text style={styles.noProductFound}>{I18n.t('noProductFound')}</Text>
+          <Text style={styles.noProductFound}>{Localization.t('noProductFound')}</Text>
         )}
       </View>
     );

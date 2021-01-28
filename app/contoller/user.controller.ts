@@ -26,4 +26,33 @@ export class UserController {
       timeoutErrorMessage: Config.Api.timeoutErrorMessage,
     });
   };
+
+  getProfileImage = async (
+    profileImageId: number,
+    cancelToken: CancelToken,
+  ) => {
+    Logger.log({
+      severity: LogSeverity.INFO,
+      message: 'Calling API with profileImageId: ',
+      args: profileImageId,
+      callerInstance: this,
+      callerMethod: 'getProfileImage',
+    });
+
+    return await axios.get<any>(
+      Config.Api.url +
+        Config.Api.Endpoint.profileImageDownload +
+        '?id=' +
+        profileImageId.toString(),
+      {
+        cancelToken,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        timeout: Config.Api.timeout,
+        timeoutErrorMessage: Config.Api.timeoutErrorMessage,
+      },
+    );
+  };
 }

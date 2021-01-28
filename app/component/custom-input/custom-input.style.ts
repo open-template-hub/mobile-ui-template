@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { Theme } from '../../constant/theme.constant';
 
 export const styles = StyleSheet.create({
   inputContainer: {
@@ -23,13 +24,22 @@ export const styles = StyleSheet.create({
   },
   textInput: {
     fontSize: 13,
-    marginTop: -32,
     marginLeft: 34,
     color: '#616161',
+  },
+  marginedText: {
+    marginTop: -32
   },
   inputIcon: {
     marginTop: 8,
     marginLeft: 12,
     color: '#616161',
+  },
+  placeholder: {
+    marginTop: -38,
+    marginLeft: 12,
+    fontSize: 10,
+    color: Theme.Color.defaultButtonColor,
+    fontWeight: '700',
   },
 });

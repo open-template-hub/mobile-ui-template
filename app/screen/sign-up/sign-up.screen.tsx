@@ -1,4 +1,4 @@
-import I18n from './../../i18n/i18n';
+import Localization from '../../localization/i18n/i18n.localization';
 import React from 'react';
 import {KeyboardAvoidingView, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -60,7 +60,7 @@ export default class SignUpScreen extends React.Component<Props, State> {
 
                 <View style={styles.orBeClassical}>
                   <Text style={styles.orBeClassicalLabel}>
-                    {I18n.t('orBeClassical')}
+                    {Localization.t('orBeClassical')}
                   </Text>
                 </View>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Alert, View} from 'react-native';
-import I18n from './../../i18n/i18n';
+import Localization from '../../localization/i18n/i18n.localization';
 import {AuthController} from '../../contoller/auth.controller';
 import SocialLoginButton from './../social-login-button/social-login-button.component';
 import {SocialLoginType} from './../../enum/social-login.enum';
@@ -31,10 +31,10 @@ export default class SocialLogin extends React.Component<Props> {
       if (success) {
         navigation.navigate(Screens.Dashboard);
       } else {
-        Alert.alert(I18n.t('credentialsNotRetained'));
+        Alert.alert(Localization.t('credentialsNotRetained'));
       }
     } catch (e) {
-      Alert.alert(I18n.t('facebookLoginErrorLabel'));
+      Alert.alert(Localization.t('facebookLoginErrorLabel'));
     } finally {
       main.setState({loading: false});
     }
@@ -49,10 +49,10 @@ export default class SocialLogin extends React.Component<Props> {
       if (success) {
         navigation.navigate(Screens.Dashboard);
       } else {
-        Alert.alert(I18n.t('credentialsNotRetained'));
+        Alert.alert(Localization.t('credentialsNotRetained'));
       }
     } catch (e) {
-      Alert.alert(I18n.t('googleLoginErrorLabel') + e);
+      Alert.alert(Localization.t('googleLoginErrorLabel') + e);
     } finally {
       main.setState({loading: false});
     }

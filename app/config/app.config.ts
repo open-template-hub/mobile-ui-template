@@ -12,7 +12,9 @@ export const Config = {
       signIn: '/auth/login',
       me: '/user/me',
       subscription: '/payment/subscription',
-      token: '/auth/token'
+      token: '/auth/token',
+      profileImageUpload: '/file/me',
+      profileImageDownload: '/file/public',
     },
     timeout: 3000,
     timeoutErrorMessage: 'Request timed out',

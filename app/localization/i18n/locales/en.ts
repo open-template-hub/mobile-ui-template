@@ -25,6 +25,8 @@ export default {
   noProductFound: 'No product could be found.',
   products: 'Products',
   profile: 'Profile',
+  firstName: 'First Name',
+  lastName: 'Last Name',
   signUpCompleted:
     'Please check your email to validate your account. After validating your account you can continue with Login.',
 };
