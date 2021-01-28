@@ -50,10 +50,12 @@ export default class ProductItem extends React.Component<Props, State> {
 
     return (
       <View style={[styles.product]}>
-        <TouchableWithoutFeedback onPress={() => console.log('Match Clicked')}>
+        <TouchableWithoutFeedback
+          onPress={() => console.log('Product Clicked')}>
           <View style={[styles.imageContainer]}></View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => console.log('Match Clicked')}>
+        <TouchableWithoutFeedback
+          onPress={() => console.log('Product Clicked')}>
           <View style={styles.productDescription}>
             <Text style={styles.productTitle}>{product.teams}</Text>
             <Text style={styles.productDate}>{formattedMatchTime}</Text>
@@ -65,7 +67,8 @@ export default class ProductItem extends React.Component<Props, State> {
             </View>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => console.log('Match Clicked')}>
+        <TouchableWithoutFeedback
+          onPress={() => console.log('Product Clicked')}>
           <View style={[styles.imageContainer, styles.endContainer]}></View>
         </TouchableWithoutFeedback>
       </View>

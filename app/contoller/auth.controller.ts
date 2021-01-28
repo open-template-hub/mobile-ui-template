@@ -7,9 +7,18 @@ import {AuthArgs} from '../interface/auth-args.interface';
 import axios from 'axios';
 import {Auth} from '../interface/auth.interface';
 import {Storage} from '../app.store';
+import {Logger} from '../util/logger.util';
+import {LogSeverity} from '../enum/log-severity.enum';
 
 export class AuthController {
   signIn = async (args: AuthArgs) => {
+    Logger.log({
+      severity: LogSeverity.INFO,
+      message: 'Calling API with args: ',
+      args,
+      callerInstance: this,
+      callerMethod: 'signIn',
+    });
     try {
       const response = await axios.post<any>(
         Config.Api.url + Config.Api.Endpoint.signIn,
@@ -19,8 +28,8 @@ export class AuthController {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
-          timeout: 5000,
-          timeoutErrorMessage: 'Request timed out',
+          timeout: Config.Api.timeout,
+          timeoutErrorMessage: Config.Api.timeoutErrorMessage,
         },
       );
       const auth = response.data as Auth;
@@ -31,12 +40,25 @@ export class AuthController {
         return false;
       }
     } catch (e) {
-      console.log('AuthController signIn Error: ', e);
+      Logger.log({
+        severity: LogSeverity.MAJOR,
+        message: 'Error: ',
+        args: e,
+        callerInstance: this,
+        callerMethod: 'signIn',
+      });
       return false;
     }
   };
 
   signUp = async (args: AuthArgs) => {
+    Logger.log({
+      severity: LogSeverity.INFO,
+      message: 'Calling API with args: ',
+      args,
+      callerInstance: this,
+      callerMethod: 'signUp',
+    });
     try {
       const response = await axios.post<any>(
         Config.Api.url + Config.Api.Endpoint.signUp,
@@ -46,12 +68,18 @@ export class AuthController {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
-          timeout: 5000,
-          timeoutErrorMessage: 'Request timed out',
+          timeout: Config.Api.timeout,
+          timeoutErrorMessage: Config.Api.timeoutErrorMessage,
         },
       );
 
-      console.log('Auth Response: ', response);
+      Logger.log({
+        severity: LogSeverity.INFO,
+        message: 'Auth Response: ',
+        args: response,
+        callerInstance: this,
+        callerMethod: 'signUp',
+      });
 
       const auth = response.data;
 
@@ -61,7 +89,13 @@ export class AuthController {
         return false;
       }
     } catch (e) {
-      console.log('AuthController SignUp Error: ', e);
+      Logger.log({
+        severity: LogSeverity.MAJOR,
+        message: 'Error: ',
+        args: e,
+        callerInstance: this,
+        callerMethod: 'signUp',
+      });
       return false;
     }
   };
@@ -69,19 +103,39 @@ export class AuthController {
   signOut = async () => {
     try {
       await GoogleSignin.signOut();
-      console.log('signOut::Google Sign Out Completed');
+      Logger.log({
+        severity: LogSeverity.INFO,
+        message: 'Google Sign Out Completed.',
+        callerInstance: this,
+        callerMethod: 'signOut',
+      });
     } catch (e) {}
 
     try {
       LoginManager.logOut();
-      console.log('signOut::Facebook Sign Out Completed');
+      Logger.log({
+        severity: LogSeverity.INFO,
+        message: 'Facebook Sign Out Completed.',
+        callerInstance: this,
+        callerMethod: 'signOut',
+      });
     } catch (e) {}
 
     await Storage.cleanAuth();
-    console.log('signOut::Auth Clean Completed');
+    Logger.log({
+      severity: LogSeverity.INFO,
+      message: 'Auth Clean Completed.',
+      callerInstance: this,
+      callerMethod: 'signOut',
+    });
 
     await Storage.cleanPurchase();
-    console.log('signOut::Purchase Clean Completed');
+    Logger.log({
+      severity: LogSeverity.INFO,
+      message: 'Purchase Clean Completed.',
+      callerInstance: this,
+      callerMethod: 'signOut',
+    });
   };
 
   googleLogin = async () => {
@@ -94,7 +148,13 @@ export class AuthController {
       if (hasPlayServices) {
         const user = await GoogleSignin.signIn();
 
-        console.log('googleLogin::Result: ', user);
+        Logger.log({
+          severity: LogSeverity.INFO,
+          message: 'Result: ',
+          callerInstance: this,
+          args: user,
+          callerMethod: 'googleLogin',
+        });
 
         if (user) {
           const tokens = await GoogleSignin.getTokens();
@@ -104,9 +164,17 @@ export class AuthController {
               tokenType: 'bearer',
               key: SocialLoginType.GOOGLE,
             } as SocialLoginArgs;
-            console.log('googleLogin::Access Token: ', tokens.accessToken);
+
+            Logger.log({
+              severity: LogSeverity.INFO,
+              message: 'Access Token: ',
+              callerInstance: this,
+              args: tokens.accessToken,
+              callerMethod: 'googleLogin',
+            });
+
             const response = await this.socialLogin(args);
-            // console.log('googleLogin:: response Data:', response);
+
             const auth = response.data as Auth;
             if (auth && auth.accessToken && auth.refreshToken) {
               await Storage.setAuth(auth);
@@ -122,6 +190,13 @@ export class AuthController {
         return false;
       }
     } catch (e) {
+      Logger.log({
+        severity: LogSeverity.MAJOR,
+        message: 'Error: ',
+        args: e,
+        callerInstance: this,
+        callerMethod: 'googleLogin',
+      });
       return false;
     }
     return false;
@@ -138,10 +213,21 @@ export class AuthController {
         'public_profile',
       ]);
 
-      console.log(login);
+      Logger.log({
+        severity: LogSeverity.INFO,
+        message: 'Result: ',
+        callerInstance: this,
+        args: login,
+        callerMethod: 'facebookLogin',
+      });
 
       if (login.isCancelled) {
-        console.log('Login cancelled');
+        Logger.log({
+          severity: LogSeverity.MINOR,
+          message: 'Login cancelled.',
+          callerInstance: this,
+          callerMethod: 'facebookLogin',
+        });
       } else {
         const data = await AccessToken.getCurrentAccessToken();
         if (data) {
@@ -151,9 +237,17 @@ export class AuthController {
             tokenType: 'bearer',
             key: SocialLoginType.FACEBOOK,
           } as SocialLoginArgs;
-          console.log('facebookLogin::Access Token: ', accessToken);
+
+          Logger.log({
+            severity: LogSeverity.MINOR,
+            message: 'Access Token: ',
+            args: accessToken,
+            callerInstance: this,
+            callerMethod: 'facebookLogin',
+          });
+
           const response = await this.socialLogin(args);
-          // console.log('facebookLogin:: response Data:', response);
+
           const auth = response.data as Auth;
 
           if (auth && auth.accessToken && auth.refreshToken) {
@@ -167,7 +261,13 @@ export class AuthController {
         }
       }
     } catch (e) {
-      console.log('facebookLogin:: Unexpected error: ', e);
+      Logger.log({
+        severity: LogSeverity.MAJOR,
+        message: 'Error: ',
+        args: e,
+        callerInstance: this,
+        callerMethod: 'facebookLogin',
+      });
       return false;
     }
     return false;
@@ -182,9 +282,31 @@ export class AuthController {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        timeout: 5000,
-        timeoutErrorMessage: 'Request timed out',
+        timeout: Config.Api.timeout,
+        timeoutErrorMessage: Config.Api.timeoutErrorMessage,
       },
     );
+  };
+
+  getToken = async (args: Auth) => {
+    const res = await axios.post<any>(
+      Config.Api.url + Config.Api.Endpoint.token,
+      JSON.stringify({token: args.refreshToken}),
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        timeout: Config.Api.timeout,
+        timeoutErrorMessage: Config.Api.timeoutErrorMessage,
+      },
+    );
+
+    if (res && res.status === 200 && res.data) {
+      await Storage.setAuth(res.data);
+      return true;
+    } else {
+      return false;
+    }
   };
 }

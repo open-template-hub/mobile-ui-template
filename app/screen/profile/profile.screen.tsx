@@ -1,15 +1,21 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Product} from '../../interface/product.interface';
 import {styles} from './profile.style';
 import {AnalyticsUtil} from '../../util/analytics.util';
 import {Screens} from '../../constant/screens.constant';
 import axios, {CancelTokenSource} from 'axios';
+import Profile from '../../component/profile/profile.component';
+import {UserController} from '../../contoller/user.controller';
+import {Storage} from '../../app.store';
+import {User} from '../../interface/user.interface';
+import {Auth} from '../../interface/auth.interface';
+import Loading from '../../component/loading/loading.component';
+import {Logger} from '../../util/logger.util';
+import {LogSeverity} from '../../enum/log-severity.enum';
 
 interface State {
-  products: Array<Product>;
   loading: boolean;
-  isPremium: boolean;
+  me: User;
 }
 
 interface Props {
@@ -21,15 +27,16 @@ export default class ProfileScreen extends React.Component<Props, State> {
   private _blurListener: any;
   private _mounted: boolean = false;
   private _cancelTokenSource: CancelTokenSource;
+  private _userController: UserController;
 
   constructor(props: Props) {
     super(props);
     this.state = {
-      products: [],
       loading: false,
-      isPremium: false,
+      me: {} as User,
     };
     this._cancelTokenSource = axios.CancelToken.source();
+    this._userController = new UserController();
   }
 
   componentDidMount = () => {
@@ -48,7 +55,12 @@ export default class ProfileScreen extends React.Component<Props, State> {
         this._cancelTokenSource = axios.CancelToken.source();
       });
     } else {
-      console.log('> ProfileScreen:: can not set listener');
+      Logger.log({
+        severity: LogSeverity.MINOR,
+        message: 'Can not set listener',
+        callerInstance: this,
+        callerMethod: 'componentDidMount',
+      });
     }
   };
 
@@ -65,16 +77,65 @@ export default class ProfileScreen extends React.Component<Props, State> {
 
     this.setState({
       loading: true,
-      products: [],
     });
 
-    this.setState({
-      loading: false,
-      products: [],
-    });
+    const auth = await Storage.getAuth();
+    if (auth != null) {
+      try {
+        const res = await this._userController.getMe(
+          auth as Auth,
+          this._cancelTokenSource.token,
+        );
+        if (res && res.data && res.status === 200) {
+          const me = res.data as User;
+
+          this.setState({
+            loading: false,
+            me,
+          });
+        } else if (res && res.data.message) {
+          this.setState({
+            loading: false,
+            me: {} as User,
+          });
+        } else {
+          Logger.log({
+            severity: LogSeverity.MINOR,
+            message: 'Broken Data.',
+            callerInstance: this,
+            callerMethod: 'load',
+          });
+
+          this.setState({
+            loading: false,
+            me: {} as User,
+          });
+        }
+      } catch (e) {
+        Logger.log({
+          severity: LogSeverity.MAJOR,
+          message: 'Unhandled Exception: ',
+          args: e,
+          callerInstance: this,
+          callerMethod: 'load',
+        });
+
+        this.setState({
+          loading: false,
+          me: {} as User,
+        });
+      }
+    } else {
+      this.setState({loading: false, me: {} as User});
+    }
   };
 
   render() {
-    return <View style={styles.container}></View>;
+    const {me, loading} = this.state;
+    return (
+      <View style={styles.container}>
+        {loading ? <Loading /> : <Profile user={me}></Profile>}
+      </View>
+    );
   }
 }

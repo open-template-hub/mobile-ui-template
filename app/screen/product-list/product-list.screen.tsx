@@ -8,6 +8,8 @@ import I18n from '../../i18n/i18n';
 import {AnalyticsUtil} from '../../util/analytics.util';
 import {Screens} from '../../constant/screens.constant';
 import axios, {CancelTokenSource} from 'axios';
+import {Logger} from '../../util/logger.util';
+import {LogSeverity} from '../../enum/log-severity.enum';
 
 interface State {
   products: Array<Product>;
@@ -51,7 +53,12 @@ export default class ProductListScreen extends React.Component<Props, State> {
         this._cancelTokenSource = axios.CancelToken.source();
       });
     } else {
-      console.log('> ProductListScreen:: can not set listener');
+      Logger.log({
+        severity: LogSeverity.MINOR,
+        message: 'Can not set listener',
+        callerInstance: this,
+        callerMethod: 'componentDidMount',
+      });
     }
   };
 

@@ -8,6 +8,7 @@ export const Theme = {
     white: '#FFFFFF',
     signBack1: '#F5F5F5',
     signBack2: '#EEEEEE',
+    defaultPageBackground: '#FAFAFA'
   },
   Size: {
     base: 1,

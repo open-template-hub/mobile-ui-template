@@ -12,6 +12,9 @@ import SignIn from './../../component/sign-in/sign-in.component';
 import {Screens} from '../../constant/screens.constant';
 import Loading from '../../component/loading/loading.component';
 import {AnalyticsUtil} from '../../util/analytics.util';
+import {AuthController} from '../../contoller/auth.controller';
+import {Logger} from '../../util/logger.util';
+import {LogSeverity} from '../../enum/log-severity.enum';
 
 interface Props {
   navigation: any;
@@ -24,12 +27,14 @@ interface State {
 export default class SignInScreen extends React.Component<Props, State> {
   private _focusListener: any;
   private _mounted: boolean = false;
+  private _authController: AuthController;
 
   constructor(props: Props) {
     super(props);
     this.state = {
       loading: false,
     };
+    this._authController = new AuthController();
   }
 
   componentDidMount = () => {
@@ -56,15 +61,33 @@ export default class SignInScreen extends React.Component<Props, State> {
     if (!this._mounted) return;
 
     try {
+      this.setState({loading: true});
       let auth = await Storage.getAuth();
-      console.log(auth);
+      Logger.log({
+        severity: LogSeverity.INFO,
+        message: 'Auth token taken from storage: ',
+        args: auth,
+        callerInstance: this,
+        callerMethod: 'load',
+      });
       if (auth && auth.accessToken) {
-        const {navigation} = this.props;
-        navigation.navigate(Screens.Dashboard);
+        const success = await this._authController.getToken(auth);
+        if (success) {
+          const {navigation} = this.props;
+          navigation.navigate(Screens.Dashboard);
+        }
       }
       BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     } catch (e) {
-      console.log('> SignIn:: Error occurred: ', e);
+      Logger.log({
+        severity: LogSeverity.MAJOR,
+        message: 'Error occurred: ',
+        args: e,
+        callerInstance: this,
+        callerMethod: 'load',
+      });
+    } finally {
+      this.setState({loading: false});
     }
   };
 

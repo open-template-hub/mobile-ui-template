@@ -105,7 +105,6 @@ export default class SignUp extends React.Component<Props, State> {
           Alert.alert(I18n.t('signUpError'));
         }
       } else {
-        console.log('Validation result failed: ', validationResult);
         ToastAndroid.showWithGravity(
           I18n.t('credentialsNotValid'),
           ToastAndroid.LONG,
@@ -113,7 +112,6 @@ export default class SignUp extends React.Component<Props, State> {
         );
       }
     } catch (e) {
-      console.log('SignUp Error: ', e);
       Alert.alert(I18n.t('signUpErrorLabel'), e.message);
     } finally {
       main.setState({loading: false});

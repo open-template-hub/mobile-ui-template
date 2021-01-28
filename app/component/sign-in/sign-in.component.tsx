@@ -100,7 +100,6 @@ export default class SignIn extends React.Component<Props, State> {
           Alert.alert(I18n.t('credentialsNotRetained'));
         }
       } else {
-        console.log('Validation result failed: ', validationResult);
         ToastAndroid.showWithGravity(
           I18n.t('credentialsNotValid'),
           ToastAndroid.LONG,

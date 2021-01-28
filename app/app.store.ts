@@ -4,6 +4,8 @@ import {Images} from './constant/images.constant';
 import {Auth} from './interface/auth.interface';
 import RNIap from 'react-native-iap';
 import {Config} from './config/app.config';
+import {Logger} from './util/logger.util';
+import {LogSeverity} from './enum/log-severity.enum';
 
 export class Storage {
   public static ACCESSTOKENKEY = '@MOBILEUITEMPLATE:@ACCESSTOKEN';
@@ -53,26 +55,41 @@ export class Storage {
 
   public static isPremium = async () => {
     try {
-      console.log('> Storage.isPremium:: Getting purchases');
       const purchases = await RNIap.getAvailablePurchases();
-      console.log('> Storage.isPremium:: purchases: ', purchases);
       if (purchases && purchases.length > 0) {
         for (var i = 0; i < purchases.length; i++) {
           var p = purchases[i];
           if (p.purchaseToken) {
-            console.log('Purchase: ', p);
+            Logger.log({
+              severity: LogSeverity.INFO,
+              message: 'Purchase Found: ',
+              args: p,
+              callerInstanceName: 'Storage',
+              callerMethod: 'isPremium',
+            });
             Storage.setPurchase(p.purchaseToken);
             break;
           }
         }
       } else {
-        console.log('> Storage.isPremium:: Purchases are empty');
+        Logger.log({
+          severity: LogSeverity.INFO,
+          message: 'Purchases are empty.',
+          callerInstanceName: 'Storage',
+          callerMethod: 'isPremium',
+        });
         Storage.setPurchase('');
       }
       const purchase = await Storage.getPurchase();
       return purchase ? true : false;
     } catch (e) {
-      console.log('> Storage.isPremium:: Unexped error occurred: ', e);
+      Logger.log({
+        severity: LogSeverity.MAJOR,
+        message: 'Error: ',
+        args: e,
+        callerInstanceName: 'Storage',
+        callerMethod: 'isPremium',
+      });
       return false;
     }
   };
@@ -80,20 +97,44 @@ export class Storage {
   public static setPurchase = async (purchaseToken: string) => {
     try {
       await AsyncStorage.setItem(Storage.PURCHASETOKENKEY, purchaseToken);
-      console.log('purchase set: ', purchaseToken);
+      Logger.log({
+        severity: LogSeverity.INFO,
+        message: 'Purchase Set: ',
+        args: purchaseToken,
+        callerInstanceName: 'Storage',
+        callerMethod: 'setPurchase',
+      });
     } catch (error) {
-      console.log('error on async storage (purchase): ', error);
+      Logger.log({
+        severity: LogSeverity.MAJOR,
+        message: 'Error: ',
+        args: error,
+        callerInstanceName: 'Storage',
+        callerMethod: 'setPurchase',
+      });
     }
   };
 
   public static setAuth = async (auth: Auth) => {
-    console.log('auth set', auth);
+    Logger.log({
+      severity: LogSeverity.INFO,
+      message: 'Auth Set: ',
+      args: auth,
+      callerInstanceName: 'Storage',
+      callerMethod: 'setAuth',
+    });
     if (auth) {
       try {
         await AsyncStorage.setItem(Storage.ACCESSTOKENKEY, auth.accessToken);
         await AsyncStorage.setItem(Storage.REFRESHTOKENKEY, auth.refreshToken);
       } catch (error) {
-        console.log('error on async storage (auth): ', error);
+        Logger.log({
+          severity: LogSeverity.MAJOR,
+          message: 'Error: ',
+          args: error,
+          callerInstanceName: 'Storage',
+          callerMethod: 'setAuth',
+        });
       }
     }
   };
