@@ -25,6 +25,8 @@ export default {
   noProductFound: 'Herhangi bir ürün bulunamadı.',
   products: 'Ürünler',
   profile: 'Profil',
+  firstName: 'Ad',
+  lastName: 'Soyad',
   signUpCompleted:
     'Hesabınızı onaylamak üzere size bir email gönderdik. Hesabınızı onayladıktan sonra uygulamaya giriş yapabilirsiniz.',
 };

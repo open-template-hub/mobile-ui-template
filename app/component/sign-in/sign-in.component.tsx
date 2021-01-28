@@ -6,7 +6,7 @@ import {AuthController} from '../../contoller/auth.controller';
 import {AuthArgs} from '../../interface/auth-args.interface';
 import {Validation} from '../../util/validation.util';
 import {styles} from './sign-in.style';
-import I18n from '../../i18n/i18n';
+import Localization from '../../localization/i18n/i18n.localization';
 import CustomInput from '../custom-input/custom-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import LabelButton from '../label-button/label-button.component';
@@ -97,18 +97,17 @@ export default class SignIn extends React.Component<Props, State> {
         if (success) {
           navigation.navigate(Screens.Dashboard);
         } else {
-          Alert.alert(I18n.t('credentialsNotRetained'));
+          Alert.alert(Localization.t('credentialsNotRetained'));
         }
       } else {
-        console.log('Validation result failed: ', validationResult);
         ToastAndroid.showWithGravity(
-          I18n.t('credentialsNotValid'),
+          Localization.t('credentialsNotValid'),
           ToastAndroid.LONG,
           ToastAndroid.BOTTOM,
         );
       }
     } catch (e) {
-      Alert.alert(I18n.t('signInErrorLabel') + e);
+      Alert.alert(Localization.t('signInErrorLabel') + e);
     } finally {
       main.setState({loading: false});
     }
@@ -127,7 +126,7 @@ export default class SignIn extends React.Component<Props, State> {
       <View style={styles.loginContainer}>
         <View>
           <CustomInput
-            placeholder={I18n.t('email')}
+            placeholder={Localization.t('email')}
             validation={valid.email}
             value={email}
             isEmail={true}
@@ -138,7 +137,7 @@ export default class SignIn extends React.Component<Props, State> {
           />
 
           <CustomInput
-            placeholder={I18n.t('password')}
+            placeholder={Localization.t('password')}
             validation={valid.password}
             value={password}
             isEmail={false}
@@ -153,13 +152,13 @@ export default class SignIn extends React.Component<Props, State> {
           <CustomButton
             onPress={async () => await onClickLogin()}
             disabled={loading}
-            title={I18n.t('signIn')}
+            title={Localization.t('signIn')}
           />
 
           <LabelButton
             disabled={loading}
             onPress={() => navigation.navigate(Screens.SignUp)}
-            title={I18n.t('goToSignUp')}
+            title={Localization.t('goToSignUp')}
           />
         </View>
       </View>

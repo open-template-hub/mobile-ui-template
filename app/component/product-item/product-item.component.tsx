@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, TouchableWithoutFeedback, View} from 'react-native';
 import {Product} from '../../interface/product.interface';
-import I18n from '../../i18n/i18n';
+import Localization from '../../localization/i18n/i18n.localization';
 import {styles} from './product-item.style';
 
 interface Props {
@@ -50,22 +50,25 @@ export default class ProductItem extends React.Component<Props, State> {
 
     return (
       <View style={[styles.product]}>
-        <TouchableWithoutFeedback onPress={() => console.log('Match Clicked')}>
+        <TouchableWithoutFeedback
+          onPress={() => console.log('Product Clicked')}>
           <View style={[styles.imageContainer]}></View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => console.log('Match Clicked')}>
+        <TouchableWithoutFeedback
+          onPress={() => console.log('Product Clicked')}>
           <View style={styles.productDescription}>
             <Text style={styles.productTitle}>{product.teams}</Text>
             <Text style={styles.productDate}>{formattedMatchTime}</Text>
             <View style={styles.prediction}>
-              <Text style={styles.averageTitle}>{I18n.t('endGameTotal')}</Text>
+              <Text style={styles.averageTitle}>{Localization.t('endGameTotal')}</Text>
               <Text style={styles.averageScore}>
                 {product.totalAverageResult}
               </Text>
             </View>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => console.log('Match Clicked')}>
+        <TouchableWithoutFeedback
+          onPress={() => console.log('Product Clicked')}>
           <View style={[styles.imageContainer, styles.endContainer]}></View>
         </TouchableWithoutFeedback>
       </View>

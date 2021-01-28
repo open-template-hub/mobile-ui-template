@@ -7,7 +7,7 @@ import {AuthController} from '../../contoller/auth.controller';
 import {AuthArgs} from '../../interface/auth-args.interface';
 import {Validation} from '../../util/validation.util';
 import {styles} from './sign-up.style';
-import I18n from './../../i18n/i18n';
+import Localization from '../../localization/i18n/i18n.localization';
 import CustomInput from '../custom-input/custom-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import LabelButton from '../label-button/label-button.component';
@@ -102,19 +102,17 @@ export default class SignUp extends React.Component<Props, State> {
         if (success) {
           onSignUpCompleted();
         } else {
-          Alert.alert(I18n.t('signUpError'));
+          Alert.alert(Localization.t('signUpError'));
         }
       } else {
-        console.log('Validation result failed: ', validationResult);
         ToastAndroid.showWithGravity(
-          I18n.t('credentialsNotValid'),
+          Localization.t('credentialsNotValid'),
           ToastAndroid.LONG,
           ToastAndroid.BOTTOM,
         );
       }
     } catch (e) {
-      console.log('SignUp Error: ', e);
-      Alert.alert(I18n.t('signUpErrorLabel'), e.message);
+      Alert.alert(Localization.t('signUpErrorLabel'), e.message);
     } finally {
       main.setState({loading: false});
     }
@@ -132,7 +130,7 @@ export default class SignUp extends React.Component<Props, State> {
       <View style={styles.signUpContainer}>
         <View>
           <CustomInput
-            placeholder={I18n.t('username')}
+            placeholder={Localization.t('username')}
             validation={valid.username}
             value={user}
             isEmail={false}
@@ -143,7 +141,7 @@ export default class SignUp extends React.Component<Props, State> {
           />
 
           <CustomInput
-            placeholder={I18n.t('email')}
+            placeholder={Localization.t('email')}
             validation={valid.email}
             value={email}
             isEmail={true}
@@ -154,7 +152,7 @@ export default class SignUp extends React.Component<Props, State> {
           />
 
           <CustomInput
-            placeholder={I18n.t('password')}
+            placeholder={Localization.t('password')}
             validation={valid.password}
             value={password}
             isEmail={false}
@@ -169,13 +167,13 @@ export default class SignUp extends React.Component<Props, State> {
           <CustomButton
             onPress={async () => await onClickSignUp()}
             disabled={loading}
-            title={I18n.t('signUp')}
+            title={Localization.t('signUp')}
           />
 
           <LabelButton
             disabled={loading}
             onPress={() => navigation.navigate(Screens.SignIn)}
-            title={I18n.t('goToSignIn')}
+            title={Localization.t('goToSignIn')}
           />
         </View>
       </View>

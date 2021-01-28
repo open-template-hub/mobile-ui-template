@@ -16,6 +16,8 @@ import {styles} from '../in-app-product-list/in-app-product-list.style';
 import InAppProduct from '../in-app-product/in-app-product.component';
 import Loading from '../loading/loading.component';
 import {BannerAd, BannerAdSize} from '@react-native-firebase/admob';
+import {LogSeverity} from '../../enum/log-severity.enum';
+import {Logger} from '../../util/logger.util';
 
 interface Props {
   onPaymentConfirmed(): Promise<void>;
@@ -64,7 +66,13 @@ export default class InAppProductList extends React.Component<Props, State> {
 
       this._purchaseUpdateSubscription = purchaseUpdatedListener(
         async (purchase: ProductPurchase) => {
-          console.log('> InAppProductList:: Purchase: ', purchase);
+          Logger.log({
+            severity: LogSeverity.INFO,
+            message: 'Purchase: ',
+            args: purchase,
+            callerInstance: this,
+            callerMethod: 'load',
+          });
           if (
             purchase.purchaseStateAndroid === 1 &&
             !purchase.isAcknowledgedAndroid &&
@@ -74,22 +82,46 @@ export default class InAppProductList extends React.Component<Props, State> {
               const ackResult = await acknowledgePurchaseAndroid(
                 purchase.purchaseToken,
               );
-              console.log('> InAppProductList:: Result:', ackResult);
+              Logger.log({
+                severity: LogSeverity.INFO,
+                message: 'Result: ',
+                args: ackResult,
+                callerInstance: this,
+                callerMethod: 'load',
+              });
             } catch (ackErr) {
-              console.warn('> InAppProductList:: Ack Error: ', ackErr);
+              Logger.log({
+                severity: LogSeverity.MINOR,
+                message: 'Ack Error: ',
+                args: ackErr,
+                callerInstance: this,
+                callerMethod: 'load',
+              });
             }
           }
           await this.purchaseConfirmed(purchase);
           this.setState({receipt: purchase.transactionReceipt});
           this._purchaseErrorSubscription = purchaseErrorListener(
             (error: PurchaseError) => {
-              console.log('> InAppProductList:: Error: ', error);
+              Logger.log({
+                severity: LogSeverity.CRITICAL,
+                message: 'Error: ',
+                args: error,
+                callerInstance: this,
+                callerMethod: 'purchaseErrorListener',
+              });
             },
           );
         },
       );
     } catch (err) {
-      console.log('> InAppProductList:: Error in cdm: ', err);
+      Logger.log({
+        severity: LogSeverity.CRITICAL,
+        message: 'Error: ',
+        args: err,
+        callerInstance: this,
+        callerMethod: 'load',
+      });
     }
 
     this.setState({loading: false, isLoaded: true});
@@ -108,10 +140,22 @@ export default class InAppProductList extends React.Component<Props, State> {
     try {
       const items = Config.Provider.Google.InApp.products;
       const products: Subscription[] = await RNIap.getSubscriptions(items);
-      console.log('> getItems:: Products[0]: ', products[0]);
+      Logger.log({
+        severity: LogSeverity.INFO,
+        message: 'Products: ',
+        args: products,
+        callerInstance: this,
+        callerMethod: 'getItems',
+      });
       this.setState({productList: products});
     } catch (err) {
-      console.log('> getItems:: purchase error => ', err);
+      Logger.log({
+        severity: LogSeverity.MAJOR,
+        message: 'Error: ',
+        args: err,
+        callerInstance: this,
+        callerMethod: 'getItems',
+      });
     }
   };
 
@@ -128,7 +172,13 @@ export default class InAppProductList extends React.Component<Props, State> {
         } as PaymentArgs;
         this._paymentController.saveSubscription(auth, paymentArgs);
       } catch (e) {
-        console.log('> purchaseConfirmed:: Error on Save Subscription: ', e);
+        Logger.log({
+          severity: LogSeverity.MAJOR,
+          message: 'Error on Save Subscription: ',
+          args: e,
+          callerInstance: this,
+          callerMethod: 'purchaseConfirmed',
+        });
       }
     }
   };

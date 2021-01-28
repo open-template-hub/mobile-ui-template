@@ -7,7 +7,7 @@ import {
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {Theme} from '../../constant/theme.constant';
-import I18n from './../../i18n/i18n';
+import Localization from '../../localization/i18n/i18n.localization';
 import {AnalyticsUtil} from '../../util/analytics.util';
 import {Screens} from '../../constant/screens.constant';
 import ProductListScreen from '../product-list/product-list.screen';
@@ -55,7 +55,7 @@ export default class DashboardScreen extends React.Component<Props> {
               },
             }}>
             <this._Drawer.Screen
-              name={I18n.t('profile')}
+              name={Localization.t('profile')}
               component={ProfileScreen}
               options={{
                 drawerIcon: ({color}: any) => (
@@ -64,7 +64,7 @@ export default class DashboardScreen extends React.Component<Props> {
               }}
             />
             <this._Drawer.Screen
-              name={I18n.t('products')}
+              name={Localization.t('products')}
               component={ProductListScreen}
               options={{
                 drawerIcon: ({color}: any) => (
@@ -73,7 +73,7 @@ export default class DashboardScreen extends React.Component<Props> {
               }}
             />
             <this._Drawer.Screen
-              name={I18n.t('signOut')}
+              name={Localization.t('signOut')}
               component={SignOutScreen}
               options={{
                 drawerIcon: ({color}: any) => (
@@ -109,30 +109,30 @@ export default class DashboardScreen extends React.Component<Props> {
               activeBackgroundColor: Theme.Color.defaultButtonColor,
             }}>
             <this._Tab.Screen
-              name={I18n.t('profile')}
+              name={Localization.t('profile')}
               component={ProfileScreen}
               options={{
-                tabBarLabel: I18n.t('profile'),
+                tabBarLabel: Localization.t('profile'),
                 tabBarIcon: ({color, size}: any) => (
                   <FontAwesomeIcon icon={faIdBadge} size={20} color={color} />
                 ),
               }}
             />
             <this._Tab.Screen
-              name={I18n.t('products')}
+              name={Localization.t('products')}
               component={ProductListScreen}
               options={{
-                tabBarLabel: I18n.t('products'),
+                tabBarLabel: Localization.t('products'),
                 tabBarIcon: ({color, size}: any) => (
                   <FontAwesomeIcon icon={faSitemap} size={20} color={color} />
                 ),
               }}
             />
             <this._Tab.Screen
-              name={I18n.t('signOut')}
+              name={Localization.t('signOut')}
               component={SignOutScreen}
               options={{
-                tabBarLabel: I18n.t('signOut'),
+                tabBarLabel: Localization.t('signOut'),
                 tabBarIcon: ({color, size}: any) => (
                   <FontAwesomeIcon
                     icon={faSignOutAlt}

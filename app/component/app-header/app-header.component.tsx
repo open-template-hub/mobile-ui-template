@@ -9,6 +9,8 @@ import {DrawerActions} from '@react-navigation/native';
 import {MenuStyle} from '../../enum/menu-style.enum';
 import {Images} from '../../constant/images.constant';
 import {Theme} from '../../constant/theme.constant';
+import {Logger} from '../../util/logger.util';
+import {LogSeverity} from '../../enum/log-severity.enum';
 
 interface Props {
   navigation: any;
@@ -26,7 +28,13 @@ export default class AppHeader extends React.Component<Props> {
     try {
       navigation.dispatch(DrawerActions.toggleDrawer());
     } catch (e) {
-      console.log('Error on Toggle Drawer: ', e);
+      Logger.log({
+        severity: LogSeverity.MAJOR,
+        message: 'Error on Toggle Drawer: ',
+        args: e,
+        callerInstance: this,
+        callerMethod: 'toggleDrawer',
+      });
     }
   };
 

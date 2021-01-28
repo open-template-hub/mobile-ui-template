@@ -1,7 +1,7 @@
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React from 'react';
-import {View, TextInput} from 'react-native';
+import {View, TextInput, Text} from 'react-native';
 import {styles} from './custom-input.style';
 
 /**
@@ -51,13 +51,14 @@ export default class CustomInput extends React.Component<Props> {
           color="#616161"
           style={styles.inputIcon}
         />
+        {value ? <Text style={styles.placeholder}>{placeholder}</Text> : null}
         <TextInput
           placeholder={placeholder}
           placeholderTextColor="#616161"
           autoCapitalize="none"
           keyboardType={isEmail ? 'email-address' : 'default'}
           secureTextEntry={isSecure}
-          style={styles.textInput}
+          style={[styles.textInput, value ? null : styles.marginedText]}
           value={value}
           editable={editable}
           onChangeText={(text) => onChangeText(text)}

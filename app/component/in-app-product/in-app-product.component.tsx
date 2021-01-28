@@ -4,7 +4,7 @@ import {Subscription} from 'react-native-iap';
 import CustomButton from '../custom-button/custom-button.component';
 import {faGooglePlay} from '@fortawesome/free-brands-svg-icons';
 import {styles} from './in-app-product.style';
-import I18n from './../../i18n/i18n';
+import Localization from '../../localization/i18n/i18n.localization';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import RNIap from 'react-native-iap';
 
@@ -38,7 +38,7 @@ export default class InAppProduct extends React.Component<Props> {
           <CustomButton
             onPress={async () => await this.subscribe(product.productId)}
             disabled={false}
-            title={I18n.t('purchase')}
+            title={Localization.t('purchase')}
           />
         </View>
       </View>

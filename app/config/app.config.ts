@@ -12,7 +12,12 @@ export const Config = {
       signIn: '/auth/login',
       me: '/user/me',
       subscription: '/payment/subscription',
+      token: '/auth/token',
+      profileImageUpload: '/file/me',
+      profileImageDownload: '/file/public',
     },
+    timeout: 3000,
+    timeoutErrorMessage: 'Request timed out',
   },
   Provider: {
     Google: {
@@ -22,7 +27,7 @@ export const Config = {
       },
       InApp: {
         subscriptionPaymentKey: 'GOOGLE_INAPP_SUBSCRIPTION',
-        products: ['item1', 'item2']
+        products: ['item1', 'item2'],
       },
       Admob: {
         bannerId: 'ca-app-pub-3175253098800565/3119626356',

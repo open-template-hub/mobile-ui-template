@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import LabelButton from '../label-button/label-button.component';
 import {styles} from './sign-up-completed.style';
-import I18n from './../../i18n/i18n';
+import Localization from '../../localization/i18n/i18n.localization';
 import {Screens} from '../../constant/screens.constant';
 
 interface Props {
@@ -21,13 +21,13 @@ export default class SignUpCompleted extends React.Component<Props> {
     return (
       <>
         <View style={styles.messageContainer}>
-          <Text style={styles.messageText}>{I18n.t('signUpCompleted')}</Text>
+          <Text style={styles.messageText}>{Localization.t('signUpCompleted')}</Text>
         </View>
         <View style={styles.actionButtonContainer}>
           <LabelButton
             disabled={false}
             onPress={() => navigation.navigate(Screens.SignIn)}
-            title={I18n.t('goToSignIn')}
+            title={Localization.t('goToSignIn')}
           />
         </View>
       </>

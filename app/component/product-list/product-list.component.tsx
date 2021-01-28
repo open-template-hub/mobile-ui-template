@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import SearchBox from '../search-box/search-box.component';
 import {styles} from './product-list.style';
-import I18n from './../../i18n/i18n';
+import Localization from '../../localization/i18n/i18n.localization';
 import {Product} from '../../interface/product.interface';
 import ProductItem from '../product-item/product-item.component';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -60,7 +60,7 @@ export default class ProductList extends React.Component<Props, State> {
         style={[{flex: 1, paddingTop: Theme.Size.base * 4}]}>
         <View style={styles.searchBox}>
           <SearchBox
-            placeholder={I18n.t('searchText')}
+            placeholder={Localization.t('searchText')}
             value={this.state.searchText}
             onChangeText={(text) => this.filterProducts(text)}
           />

@@ -14,4 +14,6 @@ I18n.defaultLocale = 'en';
 
 I18n.locale = NativeModules.I18nManager.localeIdentifier;
 
-export default I18n;
+const Localization = I18n;
+
+export default Localization;
