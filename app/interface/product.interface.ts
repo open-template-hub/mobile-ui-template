@@ -1,8 +1,6 @@
 export interface Product {
-  matchTime: string;
-  chance: number;
-  mtype: string;
-  teams: string;
-  totalAverageResult: number;
-  matchCode: string;
+  product_id: string;
+  name: string;
+  description: string;
+  payload: any;
 }

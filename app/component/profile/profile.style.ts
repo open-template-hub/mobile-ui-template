@@ -31,6 +31,17 @@ export const styles = StyleSheet.create({
     borderWidth: 0.1,
     borderRadius: 75,
   },
+  emptyProfileImage: {
+    width: 120,
+    height: 120,
+    borderColor: '#212121',
+    backgroundColor: '#E0E0E0',
+    borderWidth: 0.1,
+    borderRadius: 75,
+    alignContent: 'center',
+    justifyContent: 'center',
+    padding: 40,
+  },
   actions: {
     marginTop: 30,
   },

@@ -38,11 +38,11 @@ export default class ProductList extends React.Component<Props, State> {
     const {products} = this.props;
     if (text.length > 0) {
       var re = new RegExp(text, 'gi');
-      let filteredMatches = products.filter((m) => {
-        return m.teams.search(re) !== -1;
+      let filteredProducts = products.filter((m) => {
+        return m.product_id.search(re) !== -1;
       });
 
-      this.setState({filteredProducts: filteredMatches, searchText: text});
+      this.setState({filteredProducts: filteredProducts, searchText: text});
     } else {
       this.setState({searchText: text, filteredProducts: products});
     }
@@ -70,12 +70,12 @@ export default class ProductList extends React.Component<Props, State> {
             <View style={styles.ads}>
               <BannerAd
                 unitId={Config.Provider.Google.Admob.bannerId}
-                size={BannerAdSize.MEDIUM_RECTANGLE}
+                size={BannerAdSize.ADAPTIVE_BANNER}
                 requestOptions={{
                   requestNonPersonalizedAdsOnly: true,
                 }}
                 onAdClosed={() => console.log('onAdClosed')}
-                onAdFailedToLoad={() => console.log('onAdFailedToLoad')}
+                onAdFailedToLoad={(e) => console.log('onAdFailedToLoad', e)}
                 onAdLoaded={() => console.log('onAdLoaded')}
                 onAdOpened={() => console.log('onAdOpened')}
                 onAdLeftApplication={() => console.log('onAdLeftApplication')}
@@ -86,9 +86,9 @@ export default class ProductList extends React.Component<Props, State> {
           )}
 
           {filteredProducts
-            ? filteredProducts.map((match) => (
-                <View key={match.matchCode} style={styles.productItem}>
-                  <ProductItem product={match} />
+            ? filteredProducts.map((p) => (
+                <View key={p.product_id} style={styles.productItem}>
+                  <ProductItem product={p} />
                 </View>
               ))
             : null}

@@ -16,6 +16,11 @@ import ProfileScreen from '../profile/profile.screen';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import SignOutScreen from '../sign-out/sign-out.screen';
 import {MenuStyle} from '../../enum/menu-style.enum';
+import {Storage} from '../../app.store';
+import {UserPayload} from '../../interface/user-payload.interface';
+import {UserController} from '../../contoller/user.controller';
+import {Logger} from '../../util/logger.util';
+import {LogSeverity} from '../../enum/log-severity.enum';
 
 interface Props {
   navigation: any;
@@ -24,16 +29,35 @@ interface Props {
 export default class DashboardScreen extends React.Component<Props> {
   private _Tab: any;
   private _Drawer: any;
+  private _userController: UserController;
 
   constructor(props: any) {
     super(props);
     this._Tab = createBottomTabNavigator();
     this._Drawer = createDrawerNavigator();
+    this._userController = new UserController();
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     AnalyticsUtil.log(Screens.Dashboard);
-  }
+    try {
+      const auth = await Storage.getAuth();
+      if (auth && auth.accessToken) {
+        await this._userController.saveMe(auth, {
+          firstName: '',
+          lastName: '',
+        } as UserPayload);
+      }
+    } catch (e) {
+      Logger.log({
+        severity: LogSeverity.MINOR,
+        message: 'Error on saveMe: ',
+        args: e,
+        callerInstance: this,
+        callerMethod: 'componentDidMount',
+      });
+    }
+  };
 
   render() {
     const {navigation} = this.props;

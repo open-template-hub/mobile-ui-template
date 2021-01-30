@@ -107,7 +107,7 @@ export default class SignIn extends React.Component<Props, State> {
         );
       }
     } catch (e) {
-      Alert.alert(Localization.t('signInErrorLabel') + e);
+      Alert.alert(Localization.t('signInErrorLabel'), e.message);
     } finally {
       main.setState({loading: false});
     }

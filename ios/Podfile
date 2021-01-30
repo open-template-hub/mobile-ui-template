@@ -12,6 +12,8 @@ target 'mobileuitemplate' do
 
   pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
 
+  pod 'react-native-simple-toast', :path => '../node_modules/react-native-simple-toast'
+
   target 'mobileuitemplateTests' do
     inherit! :complete
     # Pods for testing

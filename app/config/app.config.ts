@@ -11,6 +11,7 @@ export const Config = {
       signUp: '/auth/signup',
       signIn: '/auth/login',
       me: '/user/me',
+      product: '/product/all',
       subscription: '/payment/subscription',
       token: '/auth/token',
       profileImageUpload: '/file/me',
@@ -18,6 +19,7 @@ export const Config = {
     },
     timeout: 3000,
     timeoutErrorMessage: 'Request timed out',
+    fileServiceProvicerKey: 'S3',
   },
   Provider: {
     Google: {
@@ -30,7 +32,7 @@ export const Config = {
         products: ['item1', 'item2'],
       },
       Admob: {
-        bannerId: 'ca-app-pub-3175253098800565/3119626356',
+        bannerId: 'ca-app-pub-3940256099942544/6300978111',
       },
       Firebase: {
         apiKey:
