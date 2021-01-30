@@ -3,6 +3,8 @@ import {Auth} from '../interface/auth.interface';
 import axios, {CancelToken} from 'axios';
 import {Logger} from '../util/logger.util';
 import {LogSeverity} from '../enum/log-severity.enum';
+import {UserPayload} from '../interface/user-payload.interface';
+import {File} from '../interface/file.interface';
 
 export class UserController {
   getMe = async (auth: Auth, cancelToken: CancelToken) => {
@@ -20,7 +22,7 @@ export class UserController {
       headers: {
         Authorization: bearer,
         Accept: 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
       timeout: Config.Api.timeout,
       timeoutErrorMessage: Config.Api.timeoutErrorMessage,
@@ -48,7 +50,104 @@ export class UserController {
         cancelToken,
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
+        },
+        timeout: Config.Api.timeout,
+        timeoutErrorMessage: Config.Api.timeoutErrorMessage,
+      },
+    );
+  };
+
+  saveMe = async (auth: Auth, payload: UserPayload) => {
+    Logger.log({
+      severity: LogSeverity.INFO,
+      message: 'Calling API with Payload: ',
+      args: payload,
+      callerInstance: this,
+      callerMethod: 'saveMe',
+    });
+
+    const bearer = 'Bearer ' + auth.accessToken;
+    return await axios.post<any>(
+      Config.Api.url + Config.Api.Endpoint.me,
+      JSON.stringify({payload}),
+      {
+        headers: {
+          Authorization: bearer,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        timeout: Config.Api.timeout,
+        timeoutErrorMessage: Config.Api.timeoutErrorMessage,
+      },
+    );
+  };
+
+  saveProfileImage = async (
+    auth: Auth,
+    image: string,
+    contentType: string,
+    username: string,
+  ) => {
+    Logger.log({
+      severity: LogSeverity.INFO,
+      message: 'Calling API',
+      callerInstance: this,
+      callerMethod: 'saveProfileImage',
+    });
+
+    const args = {
+      key: Config.Api.fileServiceProvicerKey,
+      payload: {
+        title: username + '/profile_img',
+        description: 'profile image',
+        content_type: contentType,
+        data: image,
+        is_public: true,
+      } as File,
+    };
+
+    const bearer = 'Bearer ' + auth.accessToken;
+
+    const res = await axios.post<any>(
+      Config.Api.url + Config.Api.Endpoint.profileImageUpload,
+      JSON.stringify(args),
+      {
+        headers: {
+          Authorization: bearer,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        timeout: Config.Api.timeout,
+        timeoutErrorMessage: Config.Api.timeoutErrorMessage,
+      },
+    );
+
+    if (res.data && res.data.id) {
+      return res.data.id;
+    } else {
+      return -1;
+    }
+  };
+
+  updateMe = async (auth: Auth, payload: UserPayload) => {
+    Logger.log({
+      severity: LogSeverity.INFO,
+      message: 'Calling API with Payload: ',
+      args: payload,
+      callerInstance: this,
+      callerMethod: 'updateMe',
+    });
+
+    const bearer = 'Bearer ' + auth.accessToken;
+    return await axios.put<any>(
+      Config.Api.url + Config.Api.Endpoint.me,
+      JSON.stringify({payload}),
+      {
+        headers: {
+          Authorization: bearer,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
         timeout: Config.Api.timeout,
         timeoutErrorMessage: Config.Api.timeoutErrorMessage,

@@ -18,6 +18,7 @@ export const Config = {
     },
     timeout: 3000,
     timeoutErrorMessage: 'Request timed out',
+    fileServiceProvicerKey: 'S3',
   },
   Provider: {
     Google: {
