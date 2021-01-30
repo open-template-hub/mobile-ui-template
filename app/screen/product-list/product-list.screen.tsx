@@ -10,6 +10,8 @@ import {Screens} from '../../constant/screens.constant';
 import axios, {CancelTokenSource} from 'axios';
 import {Logger} from '../../util/logger.util';
 import {LogSeverity} from '../../enum/log-severity.enum';
+import {ProductController} from '../../contoller/product.controller';
+import {Storage} from '../../app.store';
 
 interface State {
   products: Array<Product>;
@@ -26,6 +28,7 @@ export default class ProductListScreen extends React.Component<Props, State> {
   private _blurListener: any;
   private _mounted: boolean = false;
   private _cancelTokenSource: CancelTokenSource;
+  private _productController: ProductController;
 
   constructor(props: Props) {
     super(props);
@@ -35,6 +38,7 @@ export default class ProductListScreen extends React.Component<Props, State> {
       isPremium: false,
     };
     this._cancelTokenSource = axios.CancelToken.source();
+    this._productController = new ProductController();
   }
 
   componentDidMount = () => {
@@ -78,10 +82,37 @@ export default class ProductListScreen extends React.Component<Props, State> {
       products: [],
     });
 
-    this.setState({
-      loading: false,
-      products: [],
-    });
+    try {
+      const auth = await Storage.getAuth();
+
+      if (auth && auth.accessToken) {
+        const res = await this._productController.getProducts(
+          auth,
+          this._cancelTokenSource.token,
+        );
+        if (res && res.data) {
+          this.setState({loading: false, products: res.data});
+        } else {
+          Logger.log({
+            severity: LogSeverity.MINOR,
+            message: 'Broken Data.',
+            callerInstance: this,
+            callerMethod: 'load',
+          });
+        }
+      }
+    } catch (e) {
+      Logger.log({
+        severity: LogSeverity.MAJOR,
+        message: 'Unhandled Exception: ',
+        args: e,
+        callerInstance: this,
+        callerMethod: 'load',
+      });
+      this.setState({
+        loading: false,
+      });
+    }
   };
 
   render() {
@@ -93,7 +124,9 @@ export default class ProductListScreen extends React.Component<Props, State> {
         ) : products && products.length > 0 ? (
           <ProductList products={products} isPremium={isPremium} />
         ) : (
-          <Text style={styles.noProductFound}>{Localization.t('noProductFound')}</Text>
+          <Text style={styles.noProductFound}>
+            {Localization.t('noProductFound')}
+          </Text>
         )}
       </View>
     );

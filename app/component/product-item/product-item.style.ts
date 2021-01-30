@@ -14,11 +14,18 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     right: 5,
   },
+  productId: {
+    flexWrap: 'wrap',
+    fontWeight: '700',
+    color: Theme.Color.defaultButtonColor,
+    fontSize: 14,
+  },
   productTitle: {
     flexWrap: 'wrap',
     fontWeight: '700',
     color: '#212121',
     fontSize: 13,
+    marginTop: 15,
   },
   productDescription: {
     paddingLeft: 5,
