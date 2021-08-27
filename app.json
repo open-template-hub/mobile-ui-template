@@ -1,4 +1,5 @@
 {
-  "name": "mobileuitemplate",
-  "displayName": "Mobile UI Template"
+  "name": "mobile-ui-template",
+  "displayName": "Mobile UI Template",
+  "description": "Mobile UI Template for generic usage in React Native"
 }

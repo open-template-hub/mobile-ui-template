@@ -1,17 +1,18 @@
 {
   "name": "mobile-ui-template",
+  "description": "Mobile UI Template for generic usage in React Native",
   "version": "2.0.0",
-  "private": true,
+  "license": "MIT",
   "scripts": {
     "android-debug": "npx react-native run-android --variant=debug",
     "android-clean": "cd android && gradlew clean && gradlew cleanBuildCache && cd ..",
     "android-release": "npx react-native run-android --variant=release",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build": "npm install && npm audit fix && npx react-native init mobileuitemplate && react-native link && mv mobileuitemplate/ios ios && mv mobileuitemplate/android android && rm -rf mobileuitemplate && cp android-backup/app android && react-native link",
-    "build-windows": "npm install && npm audit fix && npx react-native init mobileuitemplate && react-native link && move mobileuitemplate/ios ios && move mobileuitemplate/android android && Rmdir /S /Q mobileuitemplate && xcopy /E /I /Y \"android-backup/app\" \"android/app\" && react-native link"
+    "build-windows": "npm install && npm audit fix && npx react-native init mobileuitemplate && react-native link && move mobileuitemplate/ios ios && move mobileuitemplate/android android && Rmdir /S /Q mobileuitemplate && xcopy /E /I /Y \"android-backup/app\" \"android/app\" && react-native link",
+    "ios": "react-native run-ios",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "start": "react-native start",
+    "test": "jest"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
@@ -75,5 +76,17 @@
       "json",
       "node"
     ]
-  }
+  },
+  "keywords": [
+    "mobile",
+    "mobile ui",
+    "ui",
+    "android",
+    "ios",
+    "ui template",
+    "app",
+    "typescript",
+    "template",
+    "open template hub"
+  ]
 }
