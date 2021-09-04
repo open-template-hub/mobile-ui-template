@@ -32,6 +32,10 @@ export default class SignUpScreen extends React.Component<Props, State> {
     this.setState({signUpCompleted: true});
   };
 
+  renderLoadingContent = (loading: boolean) => {
+    return loading ? <Loading /> : null;
+  };
+
   render() {
     const {navigation} = this.props;
     const {loading, signUpCompleted} = this.state;
@@ -58,7 +62,7 @@ export default class SignUpScreen extends React.Component<Props, State> {
                   </Text>
                 </View>
 
-                <View>{loading ? <Loading /> : null}</View>
+                <View>{this.renderLoadingContent(loading)}</View>
 
                 <SignUp
                   navigation={navigation}

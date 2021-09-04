@@ -111,19 +111,29 @@ export default class ProductListScreen extends React.Component<Props, State> {
     }
   };
 
+  renderContent = (
+    loading: boolean,
+    products: Product[],
+    isPremium: boolean,
+  ) => {
+    if (loading) {
+      return <Loading />;
+    } else if (products && products.length > 0) {
+      return <ProductList products={products} isPremium={isPremium} />;
+    } else {
+      return (
+        <Text style={styles.noProductFound}>
+          {Localization.t('noProductFound')}
+        </Text>
+      );
+    }
+  };
+
   render() {
     const {loading, products, isPremium} = this.state;
     return (
       <View style={styles.container}>
-        {loading ? (
-          <Loading />
-        ) : products && products.length > 0 ? (
-          <ProductList products={products} isPremium={isPremium} />
-        ) : (
-          <Text style={styles.noProductFound}>
-            {Localization.t('noProductFound')}
-          </Text>
-        )}
+        {this.renderContent(loading, products, isPremium)}
       </View>
     );
   }

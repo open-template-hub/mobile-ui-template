@@ -18,15 +18,38 @@ export default class SocialLoginButton extends React.Component<Props> {
     super(props);
   }
 
+  renderContent = (type: SocialLoginType) => {
+    if (type === SocialLoginType.FACEBOOK) {
+      return (
+        <FontAwesomeIcon
+          icon={faFacebookF}
+          size={this.buttonSize}
+          color="#EEEEEE"
+        />
+      );
+    } else if (type === SocialLoginType.GOOGLE) {
+      return (
+        <FontAwesomeIcon
+          icon={faGoogle}
+          size={this.buttonSize}
+          color="#EEEEEE"
+        />
+      );
+    } else {
+      return null;
+    }
+  };
+
   render() {
     const {onPress, type, disabled} = this.props;
 
-    var slType =
-      type === SocialLoginType.FACEBOOK
-        ? styles.facebook
-        : type === SocialLoginType.GOOGLE
-        ? styles.google
-        : null;
+    var slType = null;
+
+    if (type === SocialLoginType.FACEBOOK) {
+      slType = styles.facebook;
+    } else if (type === SocialLoginType.GOOGLE) {
+      slType = styles.google;
+    }
 
     return (
       <TouchableOpacity
@@ -35,19 +58,7 @@ export default class SocialLoginButton extends React.Component<Props> {
           onPress();
         }}>
         <View style={[styles.container, slType]}>
-          {type === SocialLoginType.FACEBOOK ? (
-            <FontAwesomeIcon
-              icon={faFacebookF}
-              size={this.buttonSize}
-              color="#EEEEEE"
-            />
-          ) : type === SocialLoginType.GOOGLE ? (
-            <FontAwesomeIcon
-              icon={faGoogle}
-              size={this.buttonSize}
-              color="#EEEEEE"
-            />
-          ) : null}
+          {this.renderContent(type)}
         </View>
       </TouchableOpacity>
     );

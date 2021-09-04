@@ -6,7 +6,6 @@ import Profile from '../../component/profile/profile.component';
 import {UserController} from '../../contoller/user.controller';
 import {Storage} from '../../app.store';
 import {User} from '../../interface/user.interface';
-import {Auth} from '../../interface/auth.interface';
 import Loading from '../../component/loading/loading.component';
 import {Logger} from '../../util/logger.util';
 import {LogSeverity} from '../../enum/log-severity.enum';
