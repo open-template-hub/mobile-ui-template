@@ -56,10 +56,10 @@ export default class DashboardScreen extends React.Component<Props> {
     }
   };
 
-  renderContent = () => {
+  renderContent = (comp: any) => {
     if (Theme.Menu.style === MenuStyle.Left) {
       return (
-        <this._Drawer.Navigator
+        <comp._Drawer.Navigator
           drawerContentOptions={{
             activeBackgroundColor: Theme.Color.defaultButtonColor,
             activeTintColor: Theme.Color.white,
@@ -71,7 +71,7 @@ export default class DashboardScreen extends React.Component<Props> {
               fontFamily: 'NotoSansJP-Bold',
             },
           }}>
-          <this._Drawer.Screen
+          <comp._Drawer.Screen
             name={Localization.t('profile')}
             component={ProfileScreen}
             options={{
@@ -80,7 +80,7 @@ export default class DashboardScreen extends React.Component<Props> {
               ),
             }}
           />
-          <this._Drawer.Screen
+          <comp._Drawer.Screen
             name={Localization.t('products')}
             component={ProductListScreen}
             options={{
@@ -89,18 +89,18 @@ export default class DashboardScreen extends React.Component<Props> {
               ),
             }}
           />
-          <this._Drawer.Screen
+          <comp._Drawer.Screen
             name={Localization.t('signOut')}
             component={SignOutScreen}
             options={{
               drawerIcon: ({color}: any) => this.getSignOutIcon(color),
             }}
           />
-        </this._Drawer.Navigator>
+        </comp._Drawer.Navigator>
       );
     } else if (Theme.Menu.style === MenuStyle.Tab) {
       return (
-        <this._Tab.Navigator
+        <comp._Tab.Navigator
           tabBarOptions={{
             activeTintColor: Theme.Color.white,
             inactiveTintColor: '#616161',
@@ -121,7 +121,7 @@ export default class DashboardScreen extends React.Component<Props> {
             },
             activeBackgroundColor: Theme.Color.defaultButtonColor,
           }}>
-          <this._Tab.Screen
+          <comp._Tab.Screen
             name={Localization.t('profile')}
             component={ProfileScreen}
             options={{
@@ -131,7 +131,7 @@ export default class DashboardScreen extends React.Component<Props> {
               ),
             }}
           />
-          <this._Tab.Screen
+          <comp._Tab.Screen
             name={Localization.t('products')}
             component={ProductListScreen}
             options={{
@@ -141,7 +141,7 @@ export default class DashboardScreen extends React.Component<Props> {
               ),
             }}
           />
-          <this._Tab.Screen
+          <comp._Tab.Screen
             name={Localization.t('signOut')}
             component={SignOutScreen}
             options={{
@@ -149,7 +149,7 @@ export default class DashboardScreen extends React.Component<Props> {
               tabBarIcon: ({color, size}: any) => this.getSignOutIcon(color),
             }}
           />
-        </this._Tab.Navigator>
+        </comp._Tab.Navigator>
       );
     } else {
       return null;
@@ -166,7 +166,7 @@ export default class DashboardScreen extends React.Component<Props> {
     return (
       <>
         <AppHeader navigation={navigation} />
-        {this.renderContent()}
+        {this.renderContent(this)}
       </>
     );
   }
