@@ -2,10 +2,9 @@ import React from 'react';
 import {View, Image, ActivityIndicator, Platform} from 'react-native';
 import {GoogleSignin} from 'react-native-google-signin';
 import {Storage} from '../../app.store';
-import {AnalyticsUtil} from '../../util/analytics.util';
-import {Config} from './../../config/app.config';
-import {Images} from './../../constant/images.constant';
-import {Screens} from './../../constant/screens.constant';
+import {Config} from '../../config/app.config';
+import {Images} from '../../constant/images.constant';
+import {Screens} from '../../constant/screens.constant';
 import {styles} from './onboarding.style';
 
 interface Props {
@@ -22,8 +21,6 @@ export default class OnboardingScreen extends React.Component<Props> {
 
     await Storage.initializeStorage();
     await Storage.getFirebaseAppDefault();
-    
-    AnalyticsUtil.logAppOpen();
 
     if (Platform.OS === 'ios') {
       await GoogleSignin.configure({

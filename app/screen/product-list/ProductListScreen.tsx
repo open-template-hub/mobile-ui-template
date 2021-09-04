@@ -1,48 +1,47 @@
 import React from 'react';
-import {View} from 'react-native';
-import {styles} from './profile.style';
-import {AnalyticsUtil} from '../../util/analytics.util';
+import {Text, View} from 'react-native';
+import ProductList from '../../component/product-list/product-list.component';
+import {Product} from '../../interface/product.interface';
+import {styles} from './product-list.style';
+import Loading from '../../component/loading/loading.component';
+import Localization from '../../localization/i18n/Localization';
 import {Screens} from '../../constant/screens.constant';
 import axios, {CancelTokenSource} from 'axios';
-import Profile from '../../component/profile/profile.component';
-import {UserController} from '../../contoller/user.controller';
-import {Storage} from '../../app.store';
-import {User} from '../../interface/user.interface';
-import {Auth} from '../../interface/auth.interface';
-import Loading from '../../component/loading/loading.component';
 import {Logger} from '../../util/logger.util';
 import {LogSeverity} from '../../enum/log-severity.enum';
+import {ProductController} from '../../contoller/product.controller';
+import {Storage} from '../../app.store';
 
 interface State {
+  products: Array<Product>;
   loading: boolean;
-  me: User;
+  isPremium: boolean;
 }
 
 interface Props {
   navigation: any;
 }
 
-export default class ProfileScreen extends React.Component<Props, State> {
+export default class ProductListScreen extends React.Component<Props, State> {
   private _focusListener: any;
   private _blurListener: any;
   private _mounted: boolean = false;
   private _cancelTokenSource: CancelTokenSource;
-  private _userController: UserController;
+  private _productController: ProductController;
 
   constructor(props: Props) {
     super(props);
     this.state = {
+      products: [],
       loading: false,
-      me: {} as User,
+      isPremium: false,
     };
     this._cancelTokenSource = axios.CancelToken.source();
-    this._userController = new UserController();
+    this._productController = new ProductController();
   }
 
   componentDidMount = () => {
     this._mounted = true;
-
-    AnalyticsUtil.log(Screens.Products);
 
     const {navigation} = this.props;
 
@@ -77,27 +76,19 @@ export default class ProfileScreen extends React.Component<Props, State> {
 
     this.setState({
       loading: true,
+      products: [],
     });
 
-    const auth = await Storage.getAuth();
-    if (auth != null) {
-      try {
-        const res = await this._userController.getMe(
-          auth as Auth,
+    try {
+      const auth = await Storage.getAuth();
+
+      if (auth && auth.accessToken) {
+        const res = await this._productController.getProducts(
+          auth,
           this._cancelTokenSource.token,
         );
-        if (res && res.data && res.status === 200) {
-          const me = res.data as User;
-
-          this.setState({
-            loading: false,
-            me,
-          });
-        } else if (res && res.data.message) {
-          this.setState({
-            loading: false,
-            me: {} as User,
-          });
+        if (res && res.data) {
+          this.setState({loading: false, products: res.data});
         } else {
           Logger.log({
             severity: LogSeverity.MINOR,
@@ -105,36 +96,35 @@ export default class ProfileScreen extends React.Component<Props, State> {
             callerInstance: this,
             callerMethod: 'load',
           });
-
-          this.setState({
-            loading: false,
-            me: {} as User,
-          });
         }
-      } catch (e) {
-        Logger.log({
-          severity: LogSeverity.MAJOR,
-          message: 'Unhandled Exception: ',
-          args: e,
-          callerInstance: this,
-          callerMethod: 'load',
-        });
-
-        this.setState({
-          loading: false,
-          me: {} as User,
-        });
       }
-    } else {
-      this.setState({loading: false, me: {} as User});
+    } catch (e) {
+      Logger.log({
+        severity: LogSeverity.MAJOR,
+        message: 'Unhandled Exception: ',
+        args: e,
+        callerInstance: this,
+        callerMethod: 'load',
+      });
+      this.setState({
+        loading: false,
+      });
     }
   };
 
   render() {
-    const {me, loading} = this.state;
+    const {loading, products, isPremium} = this.state;
     return (
       <View style={styles.container}>
-        {loading ? <Loading /> : <Profile user={me}></Profile>}
+        {loading ? (
+          <Loading />
+        ) : products && products.length > 0 ? (
+          <ProductList products={products} isPremium={isPremium} />
+        ) : (
+          <Text style={styles.noProductFound}>
+            {Localization.t('noProductFound')}
+          </Text>
+        )}
       </View>
     );
   }

@@ -38,7 +38,7 @@ export default class InAppProduct extends React.Component<Props> {
         <Text style={styles.price}>{product.localizedPrice}</Text>
         <View style={styles.purchaseButton}>
           <CustomButtonWithIcon
-            onPress={async () => await this.oneTimePayment(product.productId)}
+            onPress={() => this.oneTimePayment(product.productId)}
             disabled={false}
             icon={faShoppingCart}
             iconSize={24}

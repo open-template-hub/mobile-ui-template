@@ -1,13 +1,12 @@
 import React from 'react';
 import {Alert, ToastAndroid, View} from 'react-native';
 import {faEnvelope} from '@fortawesome/free-regular-svg-icons';
-import {faLock} from '@fortawesome/free-solid-svg-icons';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
+import {faLock, faUser} from '@fortawesome/free-solid-svg-icons';
 import {AuthController} from '../../contoller/auth.controller';
 import {AuthArgs} from '../../interface/auth-args.interface';
 import {Validation} from '../../util/validation.util';
 import {styles} from './sign-up.style';
-import Localization from '../../localization/i18n/i18n.localization';
+import Localization from '../../localization/i18n/Localization';
 import CustomInput from '../custom-input/custom-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import LabelButton from '../label-button/label-button.component';
@@ -111,7 +110,7 @@ export default class SignUp extends React.Component<Props, State> {
           ToastAndroid.BOTTOM,
         );
       }
-    } catch (e) {
+    } catch (e: any) {
       Alert.alert(Localization.t('signUpErrorLabel'), e.message);
     } finally {
       main.setState({loading: false});
@@ -165,7 +164,7 @@ export default class SignUp extends React.Component<Props, State> {
 
         <View style={styles.actionButtonContainer}>
           <CustomButton
-            onPress={async () => await onClickSignUp()}
+            onPress={() => onClickSignUp()}
             disabled={loading}
             title={Localization.t('signUp')}
           />

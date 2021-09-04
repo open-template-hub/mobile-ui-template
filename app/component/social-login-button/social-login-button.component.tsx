@@ -20,21 +20,21 @@ export default class SocialLoginButton extends React.Component<Props> {
 
   render() {
     const {onPress, type, disabled} = this.props;
+
+    var slType =
+      type === SocialLoginType.FACEBOOK
+        ? styles.facebook
+        : type === SocialLoginType.GOOGLE
+        ? styles.google
+        : null;
+
     return (
       <TouchableOpacity
         disabled={disabled}
         onPress={() => {
           onPress();
         }}>
-        <View
-          style={[
-            styles.container,
-            type === SocialLoginType.FACEBOOK
-              ? styles.facebook
-              : type === SocialLoginType.GOOGLE
-              ? styles.google
-              : null,
-          ]}>
+        <View style={[styles.container, slType]}>
           {type === SocialLoginType.FACEBOOK ? (
             <FontAwesomeIcon
               icon={faFacebookF}

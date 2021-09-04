@@ -1,6 +1,6 @@
 import React from 'react';
 import {Alert, Image, Text, View} from 'react-native';
-import Localization from '../../localization/i18n/i18n.localization';
+import Localization from '../../localization/i18n/Localization';
 import CustomInput from '../custom-input/custom-input.component';
 import {styles} from './profile.style';
 import {faSignature} from '@fortawesome/free-solid-svg-icons';

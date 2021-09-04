@@ -24,7 +24,7 @@ export class AuthController {
       callerMethod: 'signIn',
     });
     try {
-      const response = await axios.post<any>(
+      const response = axios.post<any>(
         Config.Api.url + Config.Api.Endpoint.signIn,
         JSON.stringify(args),
         {
@@ -36,7 +36,7 @@ export class AuthController {
           timeoutErrorMessage: Config.Api.timeoutErrorMessage,
         },
       );
-      const auth = response.data as Auth;
+      const auth = (await response).data as Auth;
       if (auth && auth.accessToken && auth.refreshToken) {
         await Storage.setAuth(auth);
         return true;
@@ -64,7 +64,7 @@ export class AuthController {
       callerMethod: 'signUp',
     });
     try {
-      const response = await axios.post<any>(
+      const response = axios.post<any>(
         Config.Api.url + Config.Api.Endpoint.signUp,
         JSON.stringify(args),
         {
@@ -85,7 +85,7 @@ export class AuthController {
         callerMethod: 'signUp',
       });
 
-      const auth = response.data;
+      const auth = (await response).data;
 
       if (auth && auth.email && auth.verificationToken) {
         return true;
@@ -226,9 +226,7 @@ export class AuthController {
         appleAuthRequestResponse &&
         appleAuthRequestResponse.identityToken != undefined
       ) {
-        return await this.appleLoginInternal(
-          appleAuthRequestResponse.identityToken,
-        );
+        return this.appleLoginInternal(appleAuthRequestResponse.identityToken);
       }
       // }
     } else {
@@ -257,7 +255,7 @@ export class AuthController {
       const response = await appleAuthAndroid.signIn();
 
       if (response && response.id_token != undefined && response.code) {
-        return await this.appleLoginInternal(response.id_token);
+        return this.appleLoginInternal(response.id_token);
       }
     }
 
@@ -361,8 +359,8 @@ export class AuthController {
     return false;
   };
 
-  socialLogin = async (args: SocialLoginArgs) => {
-    return await axios.post<any>(
+  socialLogin = (args: SocialLoginArgs) => {
+    return axios.post<any>(
       Config.Api.url + Config.Api.Endpoint.socialLogin,
       JSON.stringify(args),
       {
@@ -377,7 +375,7 @@ export class AuthController {
   };
 
   getToken = async (args: Auth) => {
-    const res = await axios.post<any>(
+    const res = axios.post<any>(
       Config.Api.url + Config.Api.Endpoint.token,
       JSON.stringify({token: args.refreshToken}),
       {
@@ -390,8 +388,10 @@ export class AuthController {
       },
     );
 
-    if (res && res.status === 200 && res.data) {
-      await Storage.setAuth(res.data);
+    var response = await res;
+
+    if (response && response.status === 200 && response.data) {
+      await Storage.setAuth(response.data);
       return true;
     } else {
       return false;

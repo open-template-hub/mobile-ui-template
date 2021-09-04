@@ -1,6 +1,6 @@
 import React from 'react';
 import {Alert, View} from 'react-native';
-import Localization from '../../localization/i18n/i18n.localization';
+import Localization from '../../localization/i18n/Localization';
 import {AuthController} from '../../contoller/auth.controller';
 import SocialLoginButton from './../social-login-button/social-login-button.component';
 import {SocialLoginType} from './../../enum/social-login.enum';
@@ -72,14 +72,14 @@ export default class SocialLogin extends React.Component<Props> {
       <View style={styles.socialLoginContainer}>
         <View style={styles.button1}>
           <SocialLoginButton
-            onPress={async () => await onClickFacebookLogin()}
+            onPress={() => onClickFacebookLogin()}
             type={SocialLoginType.FACEBOOK}
             disabled={loading}
           />
         </View>
         <View style={styles.button2}>
           <SocialLoginButton
-            onPress={async () => await onClickGoogleLogin()}
+            onPress={() => onClickGoogleLogin()}
             type={SocialLoginType.GOOGLE}
             disabled={loading}
           />

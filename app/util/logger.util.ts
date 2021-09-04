@@ -15,7 +15,7 @@ class LoggerUtil {
       if (!args.callerMethod) {
         try {
           throw new Error();
-        } catch (e) {
+        } catch (e: any) {
           var re = /(\w+)@|at (\w+) \(/g,
             st = e.stack,
             m;

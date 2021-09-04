@@ -1,17 +1,15 @@
-import Localization from '../../localization/i18n/i18n.localization';
+import Localization from '../../localization/i18n/Localization';
 import React from 'react';
 import {KeyboardAvoidingView, BackHandler, Text, View} from 'react-native';
 import {Storage} from '../../app.store';
 import LinearGradient from 'react-native-linear-gradient';
 import {styles} from './sign-in.style';
 import {Theme} from '../../constant/theme.constant';
-import {Images} from '../../constant/images.constant';
-import BrandHeader from './../../component/brand-header/brand-header.component';
-import SocialLogin from './../../component/social-login/social-login.component';
-import SignIn from './../../component/sign-in/sign-in.component';
+import BrandHeader from '../../component/brand-header/brand-header.component';
+import SocialLogin from '../../component/social-login/social-login.component';
+import SignIn from '../../component/sign-in/sign-in.component';
 import {Screens} from '../../constant/screens.constant';
 import Loading from '../../component/loading/loading.component';
-import {AnalyticsUtil} from '../../util/analytics.util';
 import {AuthController} from '../../contoller/auth.controller';
 import {Logger} from '../../util/logger.util';
 import {LogSeverity} from '../../enum/log-severity.enum';
@@ -39,8 +37,6 @@ export default class SignInScreen extends React.Component<Props, State> {
 
   componentDidMount = () => {
     this._mounted = true;
-
-    AnalyticsUtil.log(Screens.SignIn);
 
     this._focusListener = this.props.navigation.addListener(
       'focus',

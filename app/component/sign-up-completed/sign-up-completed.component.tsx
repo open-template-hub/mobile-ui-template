@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import LabelButton from '../label-button/label-button.component';
 import {styles} from './sign-up-completed.style';
-import Localization from '../../localization/i18n/i18n.localization';
+import Localization from '../../localization/i18n/Localization';
 import {Screens} from '../../constant/screens.constant';
 
 interface Props {

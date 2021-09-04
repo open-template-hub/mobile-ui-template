@@ -1,10 +1,10 @@
 import React from 'react';
-import DashboardScreen from './screen/dashboard/dashboard.screen';
-import OnboardingScreen from './screen/onboarding/onboarding.screen';
+import DashboardScreen from './screen/dashboard/DashboardScreen';
+import OnboardingScreen from './screen/onboarding/OnboardingScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Screens} from './constant/screens.constant';
-import SignInScreen from './screen/sign-in/sign-in.screen';
-import SignUpScreen from './screen/sign-up/sign-up.screen';
+import SignInScreen from './screen/sign-in/SignInScreen';
+import SignUpScreen from './screen/sign-up/SignUpScreen';
 
 export default class AppScreen extends React.Component {
   private _Stack: any;

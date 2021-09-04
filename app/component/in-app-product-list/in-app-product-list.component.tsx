@@ -14,7 +14,7 @@ import InAppProduct from '../in-app-product/in-app-product.component';
 import Loading from '../loading/loading.component';
 import {LogSeverity} from '../../enum/log-severity.enum';
 import {Logger} from '../../util/logger.util';
-import Localization from '../../localization/i18n/i18n.localization';
+import Localization from '../../localization/i18n/Localization';
 
 interface Props {
   onPaymentConfirmed(purchase: ProductPurchase): Promise<void>;

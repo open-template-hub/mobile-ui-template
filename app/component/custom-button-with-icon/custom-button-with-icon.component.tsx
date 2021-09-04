@@ -22,6 +22,10 @@ export default class CustomButtonWithIcon extends React.Component<Props> {
   render() {
     const {onPress, title, disabled, color, tintColor, icon, iconSize} =
       this.props;
+
+    var iSize = iconSize ? iconSize : 20;
+    var tColor = tintColor ? tintColor : Theme.Color.defaultButtonTintColor;
+
     return (
       <TouchableOpacity
         disabled={disabled}
@@ -34,11 +38,7 @@ export default class CustomButtonWithIcon extends React.Component<Props> {
             color ? {backgroundColor: color} : null,
           ]}>
           {icon ? (
-            <FontAwesomeIcon
-              icon={icon}
-              size={iconSize ? iconSize : 20}
-              color={tintColor ? tintColor : Theme.Color.defaultButtonTintColor}
-            />
+            <FontAwesomeIcon icon={icon} size={iSize} color={tColor} />
           ) : null}
           {title ? (
             <Text

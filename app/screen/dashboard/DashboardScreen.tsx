@@ -7,14 +7,13 @@ import {
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {Theme} from '../../constant/theme.constant';
-import Localization from '../../localization/i18n/i18n.localization';
-import {AnalyticsUtil} from '../../util/analytics.util';
+import Localization from '../../localization/i18n/Localization';
 import {Screens} from '../../constant/screens.constant';
-import ProductListScreen from '../product-list/product-list.screen';
+import ProductListScreen from '../product-list/ProductListScreen';
 import AppHeader from '../../component/app-header/app-header.component';
-import ProfileScreen from '../profile/profile.screen';
+import ProfileScreen from '../profile/ProfileScreen';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import SignOutScreen from '../sign-out/sign-out.screen';
+import SignOutScreen from '../sign-out/SignOutScreen';
 import {MenuStyle} from '../../enum/menu-style.enum';
 import {Storage} from '../../app.store';
 import {UserPayload} from '../../interface/user-payload.interface';
@@ -39,7 +38,6 @@ export default class DashboardScreen extends React.Component<Props> {
   }
 
   componentDidMount = async () => {
-    AnalyticsUtil.log(Screens.Dashboard);
     try {
       const auth = await Storage.getAuth();
       if (auth && auth.accessToken) {
@@ -61,6 +59,9 @@ export default class DashboardScreen extends React.Component<Props> {
 
   render() {
     const {navigation} = this.props;
+    const getSignOutIcon = (color: string) => {
+      return <FontAwesomeIcon icon={faSignOutAlt} size={20} color={color} />;
+    };
 
     return (
       <>
@@ -100,13 +101,7 @@ export default class DashboardScreen extends React.Component<Props> {
               name={Localization.t('signOut')}
               component={SignOutScreen}
               options={{
-                drawerIcon: ({color}: any) => (
-                  <FontAwesomeIcon
-                    icon={faSignOutAlt}
-                    size={20}
-                    color={color}
-                  />
-                ),
+                drawerIcon: ({color}: any) => getSignOutIcon(color),
               }}
             />
           </this._Drawer.Navigator>
@@ -157,13 +152,7 @@ export default class DashboardScreen extends React.Component<Props> {
               component={SignOutScreen}
               options={{
                 tabBarLabel: Localization.t('signOut'),
-                tabBarIcon: ({color, size}: any) => (
-                  <FontAwesomeIcon
-                    icon={faSignOutAlt}
-                    size={20}
-                    color={color}
-                  />
-                ),
+                tabBarIcon: ({color, size}: any) => getSignOutIcon(color),
               }}
             />
           </this._Tab.Navigator>
