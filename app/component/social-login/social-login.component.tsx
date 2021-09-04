@@ -20,8 +20,6 @@ export default class SocialLogin extends React.Component<Props> {
     this._authController = new AuthController();
   }
 
-  componentDidMount() {}
-
   facebookLogin = async () => {
     const {main} = this.props;
     try {
@@ -95,21 +93,21 @@ export default class SocialLogin extends React.Component<Props> {
       <View style={styles.socialLoginContainer}>
         <View style={styles.button1}>
           <SocialLoginButton
-            onPress={async () => await onClickFacebookLogin()}
+            onPress={() => onClickFacebookLogin()}
             type={SocialLoginType.FACEBOOK}
             disabled={loading}
           />
         </View>
         <View style={styles.button2}>
           <SocialLoginButton
-            onPress={async () => await onClickGoogleLogin()}
+            onPress={() => onClickGoogleLogin()}
             type={SocialLoginType.GOOGLE}
             disabled={loading}
           />
         </View>
         <View style={styles.button3}>
           <SocialLoginButton
-            onPress={async () => await onClickAppleLogin()}
+            onPress={() => onClickAppleLogin()}
             type={SocialLoginType.APPLE}
             disabled={loading}
           />
