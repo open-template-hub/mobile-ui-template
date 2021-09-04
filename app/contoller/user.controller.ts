@@ -142,7 +142,7 @@ export class UserController {
     });
 
     const bearer = 'Bearer ' + auth.accessToken;
-    return await axios.put<any>(
+    return axios.put<any>(
       Config.Api.url + Config.Api.Endpoint.me,
       JSON.stringify({payload}),
       {
