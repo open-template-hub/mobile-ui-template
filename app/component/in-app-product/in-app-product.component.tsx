@@ -1,15 +1,15 @@
 import React from 'react';
 import {Alert, Text, View} from 'react-native';
-import {Subscription} from 'react-native-iap';
-import CustomButton from '../custom-button/custom-button.component';
-import {faGooglePlay} from '@fortawesome/free-brands-svg-icons';
+import {Product} from 'react-native-iap';
 import {styles} from './in-app-product.style';
-import Localization from '../../localization/i18n/i18n.localization';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import RNIap from 'react-native-iap';
+import * as RNIap from 'react-native-iap';
+import {faCrown, faShoppingCart} from '@fortawesome/free-solid-svg-icons';
+import {Theme} from '../../constant/theme.constant';
+import CustomButtonWithIcon from '../custom-button-with-icon/custom-button-with-icon.component';
 
 interface Props {
-  product: Subscription;
+  product: Product;
 }
 
 export default class InAppProduct extends React.Component<Props> {
@@ -19,10 +19,10 @@ export default class InAppProduct extends React.Component<Props> {
 
   componentDidMount() {}
 
-  subscribe = async (productId: string) => {
+  oneTimePayment = async (productId: string) => {
     try {
-      await RNIap.requestSubscription(productId);
-    } catch (err) {
+      await RNIap.requestPurchase(productId);
+    } catch (err: any) {
       Alert.alert(err.toLocaleString());
     }
   };
@@ -31,14 +31,21 @@ export default class InAppProduct extends React.Component<Props> {
     const {product} = this.props;
     return (
       <View style={styles.container}>
-        <FontAwesomeIcon icon={faGooglePlay} size={30} color="#c00611" />
+        <FontAwesomeIcon
+          icon={faCrown}
+          size={36}
+          color={Theme.Color.defaultButtonColor}
+        />
         <Text style={styles.title}>{product.title}</Text>
         <Text style={styles.price}>{product.localizedPrice}</Text>
         <View style={styles.purchaseButton}>
-          <CustomButton
-            onPress={async () => await this.subscribe(product.productId)}
+          <CustomButtonWithIcon
+            onPress={async () => await this.oneTimePayment(product.productId)}
             disabled={false}
-            title={Localization.t('purchase')}
+            icon={faShoppingCart}
+            iconSize={24}
+            color={Theme.Color.defaultActionButtonColor}
+            tintColor={'#FFC107'}
           />
         </View>
       </View>

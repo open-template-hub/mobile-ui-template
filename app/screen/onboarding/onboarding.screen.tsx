@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, ActivityIndicator} from 'react-native';
+import {View, Image, ActivityIndicator, Platform} from 'react-native';
 import {GoogleSignin} from 'react-native-google-signin';
 import {Storage} from '../../app.store';
 import {AnalyticsUtil} from '../../util/analytics.util';
@@ -21,13 +21,22 @@ export default class OnboardingScreen extends React.Component<Props> {
     const {navigation} = this.props;
 
     await Storage.initializeStorage();
-    Storage.getFirebaseAppDefault();
+    await Storage.getFirebaseAppDefault();
+    
     AnalyticsUtil.logAppOpen();
 
-    GoogleSignin.configure({
-      scopes: ['openid', 'profile', 'email'],
-      webClientId: Config.Provider.Google.Login.clientId,
-    });
+    if (Platform.OS === 'ios') {
+      await GoogleSignin.configure({
+        scopes: ['openid', 'profile', 'email'],
+        webClientId: Config.Provider.Google.Login.clientId,
+        iosClientId: Config.Provider.Google.Login.iosClientId,
+      });
+    } else {
+      GoogleSignin.configure({
+        scopes: ['openid', 'profile', 'email'],
+        webClientId: Config.Provider.Google.Login.clientId,
+      });
+    }
 
     navigation.navigate(Screens.SignIn);
   };
