@@ -32,8 +32,6 @@ export default class ProductList extends React.Component<Props, State> {
     };
   }
 
-  componentDidMount() {}
-
   filterProducts = (text: string) => {
     const {products} = this.props;
     if (text.length > 0) {

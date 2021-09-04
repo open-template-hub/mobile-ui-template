@@ -20,8 +20,6 @@ export default class SocialLogin extends React.Component<Props> {
     this._authController = new AuthController();
   }
 
-  componentDidMount() {}
-
   facebookLogin = async () => {
     const {main} = this.props;
     try {

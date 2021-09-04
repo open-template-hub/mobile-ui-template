@@ -6,7 +6,7 @@ import * as RNIap from 'react-native-iap';
 import {Config} from './config/app.config';
 import {Logger} from './util/logger.util';
 import {LogSeverity} from './enum/log-severity.enum';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 
 export class Storage {
   public static ACCESSTOKENKEY = '@MOBILEUITEMPLATE:@ACCESSTOKEN';
@@ -61,16 +61,15 @@ export class Storage {
     } as Auth;
   };
 
-  public static getPurchase = async () => {
-    return await AsyncStorage.getItem(Storage.PURCHASETOKENKEY);
+  public static getPurchase = () => {
+    return AsyncStorage.getItem(Storage.PURCHASETOKENKEY);
   };
 
   public static isPremium = async () => {
     try {
       const purchases = await RNIap.getAvailablePurchases();
       if (purchases && purchases.length > 0) {
-        for (var i = 0; i < purchases.length; i++) {
-          var p = purchases[i];
+        for (let p of purchases) {
           if (p.purchaseToken) {
             Logger.log({
               severity: LogSeverity.INFO,

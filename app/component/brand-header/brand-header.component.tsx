@@ -5,8 +5,6 @@ import {Images} from '../../constant/images.constant';
 import {styles} from './brand-header.style';
 
 export default class BrandHeader extends React.Component {
-  componentDidMount() {}
-
   render() {
     return (
       <View style={styles.brandHeaderContainer}>

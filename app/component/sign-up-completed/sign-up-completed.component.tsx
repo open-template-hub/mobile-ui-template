@@ -14,14 +14,14 @@ export default class SignUpCompleted extends React.Component<Props> {
     super(props);
   }
 
-  componentDidMount() {}
-
   render() {
     const {navigation} = this.props;
     return (
       <>
         <View style={styles.messageContainer}>
-          <Text style={styles.messageText}>{Localization.t('signUpCompleted')}</Text>
+          <Text style={styles.messageText}>
+            {Localization.t('signUpCompleted')}
+          </Text>
         </View>
         <View style={styles.actionButtonContainer}>
           <LabelButton
