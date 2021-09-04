@@ -2,10 +2,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import firebase from '@react-native-firebase/app';
 import {Images} from './constant/images.constant';
 import {Auth} from './interface/auth.interface';
-import RNIap from 'react-native-iap';
+import * as RNIap from 'react-native-iap';
 import {Config} from './config/app.config';
 import {Logger} from './util/logger.util';
 import {LogSeverity} from './enum/log-severity.enum';
+import { Platform } from 'react-native';
 
 export class Storage {
   public static ACCESSTOKENKEY = '@MOBILEUITEMPLATE:@ACCESSTOKEN';
@@ -24,17 +25,28 @@ export class Storage {
     await RNIap.initConnection();
   };
 
-  public static getFirebaseAppDefault = () => {
-    var firebaseApp;
+  public static getFirebaseAppDefault = async () => {
+    const cfg = {
+      name: Config.Provider.Google.Firebase.AppName,
+    };
+    var firebaseApp = null;
+    if (Platform.OS === 'ios') {
+      firebaseApp = await firebase.initializeApp(
+        Config.Provider.Google.Firebase.Ios,
+        cfg,
+      );
+      console.log('Initialized ios', firebaseApp);
+    } else {
+      try {
+        firebaseApp = firebase.app();
+      } catch (e) {}
 
-    try {
-      firebaseApp = firebase.app();
-    } catch (e) {
-      firebaseApp = firebase.initializeApp(Config.Provider.Google.Firebase);
-    }
-
-    if (!firebaseApp) {
-      firebaseApp = firebase.initializeApp(Config.Provider.Google.Firebase);
+      if (firebaseApp == null) {
+        firebaseApp = await firebase.initializeApp(
+          Config.Provider.Google.Firebase.Android,
+          cfg,
+        );
+      }
     }
 
     return firebaseApp;

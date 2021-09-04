@@ -8,12 +8,14 @@ export const Theme = {
     white: '#FFFFFF',
     signBack1: '#F5F5F5',
     signBack2: '#EEEEEE',
-    defaultPageBackground: '#FAFAFA'
+    defaultPageBackground: '#FAFAFA',
+    errorTintColor: '#b71c1c',
+    defaultActionButtonColor: '#424242',
   },
   Size: {
     base: 1,
   },
   Menu: {
-    style: MenuStyle.Left,
+    style: MenuStyle.Tab,
   },
 };
