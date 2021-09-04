@@ -17,8 +17,6 @@ export default class InAppProduct extends React.Component<Props> {
     super(props);
   }
 
-  componentDidMount() {}
-
   oneTimePayment = async (productId: string) => {
     try {
       await RNIap.requestPurchase(productId);

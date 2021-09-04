@@ -13,8 +13,6 @@ export default class LabelButton extends React.Component<Props> {
     super(props);
   }
 
-  componentDidMount() {}
-
   render() {
     const {onPress, title, disabled} = this.props;
     return (

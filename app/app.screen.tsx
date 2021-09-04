@@ -14,8 +14,6 @@ export default class AppScreen extends React.Component {
     this._Stack = createStackNavigator();
   }
 
-  componentDidMount() {}
-
   render() {
     return (
       <this._Stack.Navigator>

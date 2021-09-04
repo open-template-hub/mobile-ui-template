@@ -18,8 +18,6 @@ export default class SocialLoginButton extends React.Component<Props> {
     super(props);
   }
 
-  componentDidMount() {}
-
   render() {
     const {onPress, type, disabled} = this.props;
     return (

@@ -1,8 +1,7 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from './app-header.style';
 import {Common} from '../../constant/common.constant';
-import {TouchableOpacity} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faBars} from '@fortawesome/free-solid-svg-icons';
 import {DrawerActions} from '@react-navigation/native';
@@ -20,8 +19,6 @@ export default class AppHeader extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
-
-  componentDidMount() {}
 
   toggleDrawer = () => {
     const {navigation} = this.props;

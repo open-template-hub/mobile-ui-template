@@ -19,18 +19,9 @@ export default class CustomButtonWithIcon extends React.Component<Props> {
     super(props);
   }
 
-  componentDidMount() {}
-
   render() {
-    const {
-      onPress,
-      title,
-      disabled,
-      color,
-      tintColor,
-      icon,
-      iconSize,
-    } = this.props;
+    const {onPress, title, disabled, color, tintColor, icon, iconSize} =
+      this.props;
     return (
       <TouchableOpacity
         disabled={disabled}
