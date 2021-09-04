@@ -20,8 +20,6 @@ export default class AppHeader extends React.Component<Props> {
     super(props);
   }
 
-  componentDidMount() {}
-
   toggleDrawer = () => {
     const {navigation} = this.props;
     try {
