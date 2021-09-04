@@ -150,46 +150,7 @@ export class AuthController {
 
       const hasPlayServices = await GoogleSignin.hasPlayServices();
       if (hasPlayServices) {
-        const user = await GoogleSignin.signIn();
-
-        Logger.log({
-          severity: LogSeverity.INFO,
-          message: 'Result: ',
-          callerInstance: this,
-          args: user,
-          callerMethod: 'googleLogin',
-        });
-
-        if (user) {
-          const tokens = await GoogleSignin.getTokens();
-          if (tokens && tokens.accessToken) {
-            const args = {
-              accessToken: tokens.accessToken,
-              tokenType: 'bearer',
-              key: SocialLoginType.GOOGLE,
-            } as SocialLoginArgs;
-
-            Logger.log({
-              severity: LogSeverity.INFO,
-              message: 'Access Token: ',
-              callerInstance: this,
-              args: tokens.accessToken,
-              callerMethod: 'googleLogin',
-            });
-
-            const response = await this.socialLogin(args);
-
-            const auth = response.data as Auth;
-            if (auth && auth.accessToken && auth.refreshToken) {
-              await Storage.setAuth(auth);
-              return true;
-            } else {
-              return false;
-            }
-          }
-        } else {
-          return false;
-        }
+        return await this.googleIfHasPlayServices();
       } else {
         return false;
       }
@@ -203,7 +164,49 @@ export class AuthController {
       });
       return false;
     }
-    return false;
+  };
+
+  googleIfHasPlayServices = async () => {
+    const user = await GoogleSignin.signIn();
+
+    Logger.log({
+      severity: LogSeverity.INFO,
+      message: 'Result: ',
+      callerInstance: this,
+      args: user,
+      callerMethod: 'googleLogin',
+    });
+
+    if (user) {
+      const tokens = await GoogleSignin.getTokens();
+      if (tokens && tokens.accessToken) {
+        const args = {
+          accessToken: tokens.accessToken,
+          tokenType: 'bearer',
+          key: SocialLoginType.GOOGLE,
+        } as SocialLoginArgs;
+
+        Logger.log({
+          severity: LogSeverity.INFO,
+          message: 'Access Token: ',
+          callerInstance: this,
+          args: tokens.accessToken,
+          callerMethod: 'googleLogin',
+        });
+
+        const response = await this.socialLogin(args);
+
+        const auth = response.data as Auth;
+        if (auth && auth.accessToken && auth.refreshToken) {
+          await Storage.setAuth(auth);
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else {
+      return false;
+    }
   };
 
   appleLogin = async () => {
