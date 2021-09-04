@@ -1,5 +1,9 @@
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faFacebookF, faGoogle} from '@fortawesome/free-brands-svg-icons';
+import {
+  faApple,
+  faFacebookF,
+  faGoogle,
+} from '@fortawesome/free-brands-svg-icons';
 import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import {styles} from './social-login-button.style';
@@ -35,6 +39,14 @@ export default class SocialLoginButton extends React.Component<Props> {
           color="#EEEEEE"
         />
       );
+    } else if (type === SocialLoginType.APPLE) {
+      return (
+        <FontAwesomeIcon
+          icon={faApple}
+          size={this.buttonSize}
+          color="#EEEEEE"
+        />
+      );
     } else {
       return null;
     }
@@ -49,6 +61,8 @@ export default class SocialLoginButton extends React.Component<Props> {
       slType = styles.facebook;
     } else if (type === SocialLoginType.GOOGLE) {
       slType = styles.google;
+    } else if (type === SocialLoginType.APPLE) {
+      slType = styles.apple;
     }
 
     return (

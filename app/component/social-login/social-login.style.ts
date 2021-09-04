@@ -5,12 +5,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 25,
+    flexDirection: 'row',
   },
-  button1: {
-    marginLeft: -64,
-  },
+  button1: {},
   button2: {
-    marginLeft: 64,
-    marginTop: -48,
+    marginLeft: 25,
+  },
+  button3: {
+    marginLeft: 25,
   },
 });

@@ -14,4 +14,7 @@ export const styles = StyleSheet.create({
   google: {
     backgroundColor: '#c00611',
   },
+  apple: {
+    backgroundColor: '#555555',
+  },
 });

@@ -4,7 +4,7 @@ export const Theme = {
   Color: {
     google: '#DB4437',
     facebook: '#3c5898',
-    defaultButtonColor: '#880E4F',
+    defaultButtonColor: '#43b043',
     defaultButtonTintColor: '#FAFAFA',
     white: '#FFFFFF',
     signBack1: '#FAFAFA',
@@ -16,12 +16,12 @@ export const Theme = {
     errorBackgroundColor: '#b71c1c',
     defaultMenuItemBackgroundColor: '#FAFAFA',
     defaultInactiveTintColor: '#212121',
-    boldExplanationColor: '#880E4F',
+    boldExplanationColor: '#43b043',
     defaultActionButtonColor: '#424242',
     defaultBorderColor: '#EEEEEE',
     defaultNegativeButtonBackground: '#E0E0E0',
     defaultCustomHeaderColor: '#EEEEEE',
-    defaultCustomHeaderTintColor: '#880E4F',
+    defaultCustomHeaderTintColor: '#43b043',
     greenway: '#388E3C',
   },
   Size: {

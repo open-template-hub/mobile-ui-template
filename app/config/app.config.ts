@@ -4,7 +4,7 @@
 
 export const Config = {
   Api: {
-    url: 'https://oth-orchestration.herokuapp.com',
+    url: 'https://oth-server-orchestra-dev.herokuapp.com',
     Endpoint: {
       socialLoginUrl: '/social/login-url',
       socialLogin: '/social/login-with-access-token',
