@@ -5,7 +5,6 @@ import {Product} from '../../interface/product.interface';
 import {styles} from './product-list.style';
 import Loading from '../../component/loading/loading.component';
 import Localization from '../../localization/i18n/Localization';
-import {Screens} from '../../constant/screens.constant';
 import axios, {CancelTokenSource} from 'axios';
 import {Logger} from '../../util/logger.util';
 import {LogSeverity} from '../../enum/log-severity.enum';

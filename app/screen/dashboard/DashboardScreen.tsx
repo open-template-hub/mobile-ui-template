@@ -8,7 +8,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {Theme} from '../../constant/theme.constant';
 import Localization from '../../localization/i18n/Localization';
-import {Screens} from '../../constant/screens.constant';
 import ProductListScreen from '../product-list/ProductListScreen';
 import AppHeader from '../../component/app-header/app-header.component';
 import ProfileScreen from '../profile/ProfileScreen';

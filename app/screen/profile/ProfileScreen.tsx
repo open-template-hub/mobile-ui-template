@@ -1,7 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
 import {styles} from './profile.style';
-import {Screens} from '../../constant/screens.constant';
 import axios, {CancelTokenSource} from 'axios';
 import Profile from '../../component/profile/profile.component';
 import {UserController} from '../../contoller/user.controller';
