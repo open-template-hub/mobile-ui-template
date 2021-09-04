@@ -19,7 +19,9 @@ class LoggerUtil {
           var re = /(\w+)@|at (\w+) \(/g,
             st = e.stack,
             m;
-          re.exec(st), (m = re.exec(st));
+
+          m = re.exec(st);
+
           if (m) {
             args.callerMethod = m[1] || m[2];
           } else {

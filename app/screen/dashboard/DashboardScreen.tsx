@@ -56,106 +56,117 @@ export default class DashboardScreen extends React.Component<Props> {
     }
   };
 
+  renderContent = () => {
+    if (Theme.Menu.style === MenuStyle.Left) {
+      return (
+        <this._Drawer.Navigator
+          drawerContentOptions={{
+            activeBackgroundColor: Theme.Color.defaultButtonColor,
+            activeTintColor: Theme.Color.white,
+            inactiveBackgroundColor: Theme.Color.white,
+            inactiveTintColor: '#616161',
+            itemStyle: {marginVertical: 4, marginHorizontal: 4},
+            labelStyle: {
+              fontSize: 12,
+              fontFamily: 'NotoSansJP-Bold',
+            },
+          }}>
+          <this._Drawer.Screen
+            name={Localization.t('profile')}
+            component={ProfileScreen}
+            options={{
+              drawerIcon: ({color}: any) => (
+                <FontAwesomeIcon icon={faIdBadge} size={20} color={color} />
+              ),
+            }}
+          />
+          <this._Drawer.Screen
+            name={Localization.t('products')}
+            component={ProductListScreen}
+            options={{
+              drawerIcon: ({color}: any) => (
+                <FontAwesomeIcon icon={faSitemap} size={20} color={color} />
+              ),
+            }}
+          />
+          <this._Drawer.Screen
+            name={Localization.t('signOut')}
+            component={SignOutScreen}
+            options={{
+              drawerIcon: ({color}: any) => this.getSignOutIcon(color),
+            }}
+          />
+        </this._Drawer.Navigator>
+      );
+    } else if (Theme.Menu.style === MenuStyle.Tab) {
+      return (
+        <this._Tab.Navigator
+          tabBarOptions={{
+            activeTintColor: Theme.Color.white,
+            inactiveTintColor: '#616161',
+            inactiveBackgroundColor: Theme.Color.white,
+            labelStyle: {
+              fontSize: 10,
+              fontFamily: 'NotoSansJP-Bold',
+            },
+            tabStyle: {
+              justifyContent: 'center',
+              alignContent: 'center',
+              borderColor: '#EEEEEE',
+              borderWidth: 0.5,
+              borderRadius: 3,
+              paddingBottom: 7,
+              paddingTop: 13,
+              height: 60,
+            },
+            activeBackgroundColor: Theme.Color.defaultButtonColor,
+          }}>
+          <this._Tab.Screen
+            name={Localization.t('profile')}
+            component={ProfileScreen}
+            options={{
+              tabBarLabel: Localization.t('profile'),
+              tabBarIcon: ({color, size}: any) => (
+                <FontAwesomeIcon icon={faIdBadge} size={20} color={color} />
+              ),
+            }}
+          />
+          <this._Tab.Screen
+            name={Localization.t('products')}
+            component={ProductListScreen}
+            options={{
+              tabBarLabel: Localization.t('products'),
+              tabBarIcon: ({color, size}: any) => (
+                <FontAwesomeIcon icon={faSitemap} size={20} color={color} />
+              ),
+            }}
+          />
+          <this._Tab.Screen
+            name={Localization.t('signOut')}
+            component={SignOutScreen}
+            options={{
+              tabBarLabel: Localization.t('signOut'),
+              tabBarIcon: ({color, size}: any) => this.getSignOutIcon(color),
+            }}
+          />
+        </this._Tab.Navigator>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  getSignOutIcon = (color: string) => {
+    return <FontAwesomeIcon icon={faSignOutAlt} size={20} color={color} />;
+  };
+
   render() {
     const {navigation} = this.props;
-    const getSignOutIcon = (color: string) => {
-      return <FontAwesomeIcon icon={faSignOutAlt} size={20} color={color} />;
-    };
 
     return (
       <>
         <AppHeader navigation={navigation} />
-        {Theme.Menu.style === MenuStyle.Left ? (
-          <this._Drawer.Navigator
-            drawerContentOptions={{
-              activeBackgroundColor: Theme.Color.defaultButtonColor,
-              activeTintColor: Theme.Color.white,
-              inactiveBackgroundColor: Theme.Color.white,
-              inactiveTintColor: '#616161',
-              itemStyle: {marginVertical: 4, marginHorizontal: 4},
-              labelStyle: {
-                fontSize: 12,
-                fontFamily: 'NotoSansJP-Bold',
-              },
-            }}>
-            <this._Drawer.Screen
-              name={Localization.t('profile')}
-              component={ProfileScreen}
-              options={{
-                drawerIcon: ({color}: any) => (
-                  <FontAwesomeIcon icon={faIdBadge} size={20} color={color} />
-                ),
-              }}
-            />
-            <this._Drawer.Screen
-              name={Localization.t('products')}
-              component={ProductListScreen}
-              options={{
-                drawerIcon: ({color}: any) => (
-                  <FontAwesomeIcon icon={faSitemap} size={20} color={color} />
-                ),
-              }}
-            />
-            <this._Drawer.Screen
-              name={Localization.t('signOut')}
-              component={SignOutScreen}
-              options={{
-                drawerIcon: ({color}: any) => getSignOutIcon(color),
-              }}
-            />
-          </this._Drawer.Navigator>
-        ) : Theme.Menu.style === MenuStyle.Tab ? (
-          <this._Tab.Navigator
-            tabBarOptions={{
-              activeTintColor: Theme.Color.white,
-              inactiveTintColor: '#616161',
-              inactiveBackgroundColor: Theme.Color.white,
-              labelStyle: {
-                fontSize: 10,
-                fontFamily: 'NotoSansJP-Bold',
-              },
-              tabStyle: {
-                justifyContent: 'center',
-                alignContent: 'center',
-                borderColor: '#EEEEEE',
-                borderWidth: 0.5,
-                borderRadius: 3,
-                paddingBottom: 7,
-                paddingTop: 13,
-                height: 60,
-              },
-              activeBackgroundColor: Theme.Color.defaultButtonColor,
-            }}>
-            <this._Tab.Screen
-              name={Localization.t('profile')}
-              component={ProfileScreen}
-              options={{
-                tabBarLabel: Localization.t('profile'),
-                tabBarIcon: ({color, size}: any) => (
-                  <FontAwesomeIcon icon={faIdBadge} size={20} color={color} />
-                ),
-              }}
-            />
-            <this._Tab.Screen
-              name={Localization.t('products')}
-              component={ProductListScreen}
-              options={{
-                tabBarLabel: Localization.t('products'),
-                tabBarIcon: ({color, size}: any) => (
-                  <FontAwesomeIcon icon={faSitemap} size={20} color={color} />
-                ),
-              }}
-            />
-            <this._Tab.Screen
-              name={Localization.t('signOut')}
-              component={SignOutScreen}
-              options={{
-                tabBarLabel: Localization.t('signOut'),
-                tabBarIcon: ({color, size}: any) => getSignOutIcon(color),
-              }}
-            />
-          </this._Tab.Navigator>
-        ) : null}
+        {this.renderContent()}
       </>
     );
   }
