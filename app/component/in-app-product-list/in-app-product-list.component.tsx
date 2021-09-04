@@ -183,27 +183,35 @@ export default class InAppProductList extends React.Component<Props, State> {
     }
   };
 
+  renderContent = (loading: boolean, productList: Product[]) => {
+    if (loading && productList && productList.length <= 0) {
+      return <Loading />;
+    } else if (productList && productList.length > 0) {
+      return (
+        <View style={styles.products}>
+          {productList.map((p) => (
+            <View key={p.productId} style={styles.product}>
+              <InAppProduct product={p} />
+            </View>
+          ))}
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.noInAppProductContainer}>
+          <Text style={styles.noInAppProductText}>
+            {Localization.t('noInAppProductFound')}
+          </Text>
+        </View>
+      );
+    }
+  };
+
   render() {
     const {productList, loading} = this.state;
     return (
       <View style={styles.container}>
-        {loading && productList && productList.length <= 0 ? (
-          <Loading />
-        ) : productList && productList.length > 0 ? (
-          <View style={styles.products}>
-            {productList.map((p) => (
-              <View key={p.productId} style={styles.product}>
-                <InAppProduct product={p} />
-              </View>
-            ))}
-          </View>
-        ) : (
-          <View style={styles.noInAppProductContainer}>
-            <Text style={styles.noInAppProductText}>
-              {Localization.t('noInAppProductFound')}
-            </Text>
-          </View>
-        )}
+        {this.renderContent(loading, productList)}
       </View>
     );
   }

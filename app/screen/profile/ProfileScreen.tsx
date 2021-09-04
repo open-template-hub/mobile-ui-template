@@ -79,7 +79,7 @@ export default class ProfileScreen extends React.Component<Props, State> {
     if (auth != null) {
       try {
         const res = await this._userController.getMe(
-          auth as Auth,
+          auth,
           this._cancelTokenSource.token,
         );
         if (res && res.data && res.status === 200) {
