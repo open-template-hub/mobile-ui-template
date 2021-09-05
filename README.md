@@ -19,7 +19,9 @@ Open Template Hub - Mobile UI Template v2
 Mobile UI Template for generic usage in React Native
 
 <p align="center">
+  <a href="https://opentemplatehub.com">
     <img src="https://raw.githubusercontent.com/open-template-hub/open-template-hub.github.io/master/assets/products/mobile-ui/demo.png" alt="Screenshot" width="800px">
+  </a>
 </p>
 
 ## Ways to Begin
