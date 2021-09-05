@@ -13,6 +13,8 @@ import Loading from '../../component/loading/loading.component';
 import {AuthController} from '../../contoller/auth.controller';
 import {Logger} from '../../util/logger.util';
 import {LogSeverity} from '../../enum/log-severity.enum';
+import LeftHeaderHolder from '../../component/left-header-holder/left-header-holder.component';
+import RightBottomHolder from '../../component/right-bottom-holder/right-bottom-holder.component';
 
 interface Props {
   navigation: any;
@@ -102,22 +104,25 @@ export default class SignInScreen extends React.Component<Props, State> {
         locations={[0.2, 1]}
         colors={[Theme.Color.signBack1, Theme.Color.signBack2]}
         style={[{flex: 1, paddingTop: Theme.Size.base * 4}]}>
+        <LeftHeaderHolder />
         <View style={{marginTop: Theme.Size.base * 4}}>
           <KeyboardAvoidingView behavior="padding" enabled>
-            <BrandHeader />
-            <SocialLogin navigation={navigation} main={this}></SocialLogin>
+            <View style={styles.mainContainer}>
+              <SocialLogin navigation={navigation} main={this}></SocialLogin>
 
-            <View style={styles.orBeClassical}>
-              <Text style={styles.orBeClassicalLabel}>
-                {Localization.t('orBeClassical')}
-              </Text>
+              <View style={styles.orBeClassical}>
+                <Text style={styles.orBeClassicalLabel}>
+                  {Localization.t('orBeClassical')}
+                </Text>
+              </View>
+
+              <View>{loading ? <Loading /> : null}</View>
+
+              <SignIn navigation={navigation} main={this}></SignIn>
             </View>
-
-            <View>{loading ? <Loading /> : null}</View>
-
-            <SignIn navigation={navigation} main={this}></SignIn>
           </KeyboardAvoidingView>
         </View>
+        <RightBottomHolder />
       </LinearGradient>
     );
   }

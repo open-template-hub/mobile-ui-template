@@ -6,7 +6,8 @@ export const styles = StyleSheet.create({
     height: 48,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 24,
+    borderTopLeftRadius: 25,
+    borderBottomEndRadius: 25,
   },
   facebook: {
     backgroundColor: '#4267B2',

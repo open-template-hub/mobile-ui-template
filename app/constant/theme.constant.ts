@@ -9,6 +9,8 @@ export const Theme = {
     white: '#FFFFFF',
     signBack1: '#FAFAFA',
     signBack2: '#FAFAFA',
+    signBackDark1: '#212121',
+    signBackDark2: '#212121',
     defaultBackground: '#FAFAFA',
     defaultTintColor: '#212121',
     defaultPlaceholderColor: '#757575',
