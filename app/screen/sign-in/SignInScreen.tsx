@@ -5,7 +5,6 @@ import {Storage} from '../../app.store';
 import LinearGradient from 'react-native-linear-gradient';
 import {styles} from './sign-in.style';
 import {Theme} from '../../constant/theme.constant';
-import BrandHeader from '../../component/brand-header/brand-header.component';
 import SocialLogin from '../../component/social-login/social-login.component';
 import SignIn from '../../component/sign-in/sign-in.component';
 import {Screens} from '../../constant/screens.constant';

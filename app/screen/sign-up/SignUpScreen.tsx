@@ -4,13 +4,11 @@ import {KeyboardAvoidingView, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {styles} from './sign-up.style';
 import {Theme} from '../../constant/theme.constant';
-import BrandHeader from '../../component/brand-header/brand-header.component';
 import SocialLogin from '../../component/social-login/social-login.component';
 import SignUp from '../../component/sign-up/sign-up.component';
 import Loading from '../../component/loading/loading.component';
 import SignUpCompleted from '../../component/sign-up-completed/sign-up-completed.component';
 import LeftHeaderHolder from '../../component/left-header-holder/left-header-holder.component';
-import RightBottomHolder from '../../component/right-bottom-holder/right-bottom-holder.component';
 
 interface Props {
   navigation: any;
