@@ -4,9 +4,7 @@ import ProductList from '../../component/product-list/product-list.component';
 import {Product} from '../../interface/product.interface';
 import {styles} from './product-list.style';
 import Loading from '../../component/loading/loading.component';
-import Localization from '../../localization/i18n/i18n.localization';
-import {AnalyticsUtil} from '../../util/analytics.util';
-import {Screens} from '../../constant/screens.constant';
+import Localization from '../../localization/i18n/Localization';
 import axios, {CancelTokenSource} from 'axios';
 import {Logger} from '../../util/logger.util';
 import {LogSeverity} from '../../enum/log-severity.enum';
@@ -43,8 +41,6 @@ export default class ProductListScreen extends React.Component<Props, State> {
 
   componentDidMount = () => {
     this._mounted = true;
-
-    AnalyticsUtil.log(Screens.Products);
 
     const {navigation} = this.props;
 
@@ -115,19 +111,29 @@ export default class ProductListScreen extends React.Component<Props, State> {
     }
   };
 
+  renderContent = (
+    loading: boolean,
+    products: Product[],
+    isPremium: boolean,
+  ) => {
+    if (loading) {
+      return <Loading />;
+    } else if (products && products.length > 0) {
+      return <ProductList products={products} isPremium={isPremium} />;
+    } else {
+      return (
+        <Text style={styles.noProductFound}>
+          {Localization.t('noProductFound')}
+        </Text>
+      );
+    }
+  };
+
   render() {
     const {loading, products, isPremium} = this.state;
     return (
       <View style={styles.container}>
-        {loading ? (
-          <Loading />
-        ) : products && products.length > 0 ? (
-          <ProductList products={products} isPremium={isPremium} />
-        ) : (
-          <Text style={styles.noProductFound}>
-            {Localization.t('noProductFound')}
-          </Text>
-        )}
+        {this.renderContent(loading, products, isPremium)}
       </View>
     );
   }

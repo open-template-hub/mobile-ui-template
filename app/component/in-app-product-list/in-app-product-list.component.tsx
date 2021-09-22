@@ -1,42 +1,37 @@
 import React from 'react';
-import {View} from 'react-native';
-import RNIap, {
+import {View, Platform, Text} from 'react-native';
+import {
   ProductPurchase,
   PurchaseError,
-  acknowledgePurchaseAndroid,
   purchaseErrorListener,
   purchaseUpdatedListener,
-  Subscription,
+  Product,
 } from 'react-native-iap';
-import {Storage} from '../../app.store';
+import * as RNIap from 'react-native-iap';
 import {Config} from '../../config/app.config';
-import {PaymentController} from '../../contoller/payment.controller';
-import {PaymentArgs} from '../../interface/payment-args.interface';
 import {styles} from '../in-app-product-list/in-app-product-list.style';
 import InAppProduct from '../in-app-product/in-app-product.component';
 import Loading from '../loading/loading.component';
-import {BannerAd, BannerAdSize} from '@react-native-firebase/admob';
 import {LogSeverity} from '../../enum/log-severity.enum';
 import {Logger} from '../../util/logger.util';
+import Localization from '../../localization/i18n/Localization';
 
 interface Props {
-  onPaymentConfirmed(): Promise<void>;
+  onPaymentConfirmed(purchase: ProductPurchase): Promise<void>;
   navigation: any;
 }
 
 interface State {
-  productList: Subscription[];
+  productList: Product[];
   receipt: string;
   loading: boolean;
-  isLoaded: boolean;
 }
 
 export default class InAppProductList extends React.Component<Props, State> {
   private _focusListener: any;
   private _purchaseUpdateSubscription: any;
   private _purchaseErrorSubscription: any;
-
-  private _paymentController: PaymentController;
+  private _mounted: boolean = false;
 
   constructor(props: Props) {
     super(props);
@@ -44,63 +39,50 @@ export default class InAppProductList extends React.Component<Props, State> {
       productList: [],
       receipt: '',
       loading: false,
-      isLoaded: false,
     };
-
-    this._paymentController = new PaymentController();
   }
 
-  componentDidMount = () => {
-    const {isLoaded} = this.state;
-    if (isLoaded) return;
+  componentDidMount = async () => {
+    this._mounted = true;
+    const {navigation} = this.props;
 
-    this.load();
+    if (navigation) {
+      await this.load();
+    } else {
+      Logger.log({
+        severity: LogSeverity.MINOR,
+        message: 'Can not set listener',
+        callerInstance: this,
+        callerMethod: 'componentDidMount',
+      });
+    }
+  };
+
+  componentWillUnmount = () => {
+    // Remove the event listener
+    try {
+      this._mounted = false;
+      this._purchaseUpdateSubscription.remove();
+      this._purchaseErrorSubscription.remove();
+    } catch (e) {}
   };
 
   load = async () => {
+    if (!this._mounted) return;
+
     this.setState({loading: true});
 
     try {
-      await RNIap.flushFailedPurchasesCachedAsPendingAndroid();
       await this.getItems();
+      await this.processNotConsumedPurchases();
 
-      this._purchaseUpdateSubscription = purchaseUpdatedListener(
-        async (purchase: ProductPurchase) => {
-          Logger.log({
-            severity: LogSeverity.INFO,
-            message: 'Purchase: ',
-            args: purchase,
-            callerInstance: this,
-            callerMethod: 'load',
-          });
-          if (
-            purchase.purchaseStateAndroid === 1 &&
-            !purchase.isAcknowledgedAndroid &&
-            purchase.purchaseToken
-          ) {
-            try {
-              const ackResult = await acknowledgePurchaseAndroid(
-                purchase.purchaseToken,
-              );
-              Logger.log({
-                severity: LogSeverity.INFO,
-                message: 'Result: ',
-                args: ackResult,
-                callerInstance: this,
-                callerMethod: 'load',
-              });
-            } catch (ackErr) {
-              Logger.log({
-                severity: LogSeverity.MINOR,
-                message: 'Ack Error: ',
-                args: ackErr,
-                callerInstance: this,
-                callerMethod: 'load',
-              });
-            }
-          }
-          await this.purchaseConfirmed(purchase);
-          this.setState({receipt: purchase.transactionReceipt});
+      RNIap.flushFailedPurchasesCachedAsPendingAndroid()
+        .catch(() => {
+          // exception can happen here if:
+          // - there are pending purchases that are still pending (we can't consume a pending purchase)
+          // in any case, you might not want to do anything special with the error
+        })
+        .then(() => {
           this._purchaseErrorSubscription = purchaseErrorListener(
             (error: PurchaseError) => {
               Logger.log({
@@ -112,8 +94,27 @@ export default class InAppProductList extends React.Component<Props, State> {
               });
             },
           );
-        },
-      );
+
+          this._purchaseUpdateSubscription = purchaseUpdatedListener(
+            async (purchase: ProductPurchase) => {
+              if (Platform.OS === 'ios') {
+                if (purchase.transactionReceipt) {
+                  console.log('IOS Purchase: ', purchase);
+                  await this.purchaseConfirmed(purchase);
+                }
+              } else {
+                if (
+                  purchase.purchaseStateAndroid === 1 &&
+                  purchase.purchaseToken &&
+                  purchase.transactionReceipt
+                ) {
+                  console.log('Android Purchase: ', purchase);
+                  await this.purchaseConfirmed(purchase);
+                }
+              }
+            },
+          );
+        });
     } catch (err) {
       Logger.log({
         severity: LogSeverity.CRITICAL,
@@ -124,22 +125,31 @@ export default class InAppProductList extends React.Component<Props, State> {
       });
     }
 
-    this.setState({loading: false, isLoaded: true});
+    this.setState({loading: false});
   };
 
-  componentWillUnmount = () => {
-    // Remove the event listener
-    try {
-      this._focusListener.remove();
-      this._purchaseUpdateSubscription.remove();
-      this._purchaseErrorSubscription.remove();
-    } catch (e) {}
+  processNotConsumedPurchases = async () => {
+    const purchases = await RNIap.getAvailablePurchases();
+    Logger.log({
+      severity: LogSeverity.INFO,
+      message: 'Processing Not Consumed Purchases: ',
+      args: purchases,
+      callerInstance: this,
+      callerMethod: 'processNotConsumedPurchases',
+    });
+    const {onPaymentConfirmed} = this.props;
+    purchases.map(async (p: ProductPurchase) => {
+      await onPaymentConfirmed(p);
+    });
   };
 
-  getItems = async (): Promise<void> => {
+  getItems = async () => {
     try {
-      const items = Config.Provider.Google.InApp.products;
-      const products: Subscription[] = await RNIap.getSubscriptions(items);
+      const items =
+        Platform.OS === 'ios'
+          ? Config.Provider.Apple.InApp.products
+          : Config.Provider.Google.InApp.products;
+      const products: Product[] = await RNIap.getProducts(items);
       Logger.log({
         severity: LogSeverity.INFO,
         message: 'Products: ',
@@ -160,26 +170,40 @@ export default class InAppProductList extends React.Component<Props, State> {
   };
 
   purchaseConfirmed = async (purchase: ProductPurchase) => {
-    if (purchase && purchase.purchaseToken) {
-      await Storage.setPurchase(purchase.purchaseToken);
-      const {onPaymentConfirmed} = this.props;
-      await onPaymentConfirmed();
-      try {
-        const auth = await Storage.getAuth();
-        const paymentArgs = {
-          paymentConfigKey: Config.Provider.Google.InApp.subscriptionPaymentKey,
-          payload: purchase,
-        } as PaymentArgs;
-        this._paymentController.saveSubscription(auth, paymentArgs);
-      } catch (e) {
-        Logger.log({
-          severity: LogSeverity.MAJOR,
-          message: 'Error on Save Subscription: ',
-          args: e,
-          callerInstance: this,
-          callerMethod: 'purchaseConfirmed',
-        });
+    if (Platform.OS === 'ios') {
+      if (purchase && purchase.transactionReceipt) {
+        const {onPaymentConfirmed} = this.props;
+        await onPaymentConfirmed(purchase);
       }
+    } else {
+      if (purchase && purchase.purchaseToken && purchase.transactionReceipt) {
+        const {onPaymentConfirmed} = this.props;
+        await onPaymentConfirmed(purchase);
+      }
+    }
+  };
+
+  renderContent = (loading: boolean, productList: Product[]) => {
+    if (loading && productList && productList.length <= 0) {
+      return <Loading />;
+    } else if (productList && productList.length > 0) {
+      return (
+        <View style={styles.products}>
+          {productList.map((p) => (
+            <View key={p.productId} style={styles.product}>
+              <InAppProduct product={p} />
+            </View>
+          ))}
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.noInAppProductContainer}>
+          <Text style={styles.noInAppProductText}>
+            {Localization.t('noInAppProductFound')}
+          </Text>
+        </View>
+      );
     }
   };
 
@@ -187,28 +211,7 @@ export default class InAppProductList extends React.Component<Props, State> {
     const {productList, loading} = this.state;
     return (
       <View style={styles.container}>
-        <BannerAd
-          unitId={Config.Provider.Google.Admob.bannerId}
-          size={BannerAdSize.ADAPTIVE_BANNER}
-          requestOptions={{
-            requestNonPersonalizedAdsOnly: true,
-          }}
-          onAdClosed={() => console.log('onAdClosed')}
-          onAdFailedToLoad={() => console.log('onAdFailedToLoad')}
-          onAdLoaded={() => console.log('onAdLoaded')}
-          onAdOpened={() => console.log('onAdOpened')}
-          onAdLeftApplication={() => console.log('onAdLeftApplication')}
-        />
-
-        {loading ? (
-          <Loading />
-        ) : productList && productList.length > 0 ? (
-          productList.map((p) => (
-            <View key={p.productId} style={styles.product}>
-              <InAppProduct product={p} />
-            </View>
-          ))
-        ) : null}
+        {this.renderContent(loading, productList)}
       </View>
     );
   }

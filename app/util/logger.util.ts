@@ -15,11 +15,13 @@ class LoggerUtil {
       if (!args.callerMethod) {
         try {
           throw new Error();
-        } catch (e) {
+        } catch (e: any) {
           var re = /(\w+)@|at (\w+) \(/g,
             st = e.stack,
             m;
-          re.exec(st), (m = re.exec(st));
+
+          m = re.exec(st);
+
           if (m) {
             args.callerMethod = m[1] || m[2];
           } else {
@@ -28,11 +30,12 @@ class LoggerUtil {
         }
       }
 
-      const callerType = args.callerInstanceName
-        ? args.callerInstanceName
-        : args.callerInstance
-        ? args.callerInstance.constructor.name
-        : 'NonSpecifiedClass';
+      var callerType = 'NonSpecifiedClass';
+      if (args.callerInstanceName) {
+        callerType = args.callerInstanceName;
+      } else if (args.callerInstance) {
+        callerType = args.callerInstance.constructor.name;
+      }
 
       console.log(
         `${args.severity} | ${callerType}::${args.callerMethod} => ${args.message}`,

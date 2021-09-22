@@ -17,7 +17,7 @@ export class UserController {
     });
 
     const bearer = 'Bearer ' + auth.accessToken;
-    return await axios.get<any>(Config.Api.url + Config.Api.Endpoint.me, {
+    return axios.get<any>(Config.Api.url + Config.Api.Endpoint.me, {
       cancelToken,
       headers: {
         Authorization: bearer,
@@ -41,7 +41,7 @@ export class UserController {
       callerMethod: 'getProfileImage',
     });
 
-    return await axios.get<any>(
+    return axios.get<any>(
       Config.Api.url +
         Config.Api.Endpoint.profileImageDownload +
         '?id=' +
@@ -68,7 +68,7 @@ export class UserController {
     });
 
     const bearer = 'Bearer ' + auth.accessToken;
-    return await axios.post<any>(
+    return axios.post<any>(
       Config.Api.url + Config.Api.Endpoint.me,
       JSON.stringify({payload}),
       {
@@ -109,7 +109,7 @@ export class UserController {
 
     const bearer = 'Bearer ' + auth.accessToken;
 
-    const res = await axios.post<any>(
+    const res = axios.post<any>(
       Config.Api.url + Config.Api.Endpoint.profileImageUpload,
       JSON.stringify(args),
       {
@@ -123,8 +123,10 @@ export class UserController {
       },
     );
 
-    if (res.data && res.data.id) {
-      return res.data.id;
+    var response = await res;
+
+    if (response.data && response.data.id) {
+      return response.data.id;
     } else {
       return -1;
     }
@@ -140,7 +142,7 @@ export class UserController {
     });
 
     const bearer = 'Bearer ' + auth.accessToken;
-    return await axios.put<any>(
+    return axios.put<any>(
       Config.Api.url + Config.Api.Endpoint.me,
       JSON.stringify({payload}),
       {

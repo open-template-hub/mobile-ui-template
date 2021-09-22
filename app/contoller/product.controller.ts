@@ -15,7 +15,7 @@ export class ProductController {
     });
 
     const bearer = 'Bearer ' + auth.accessToken;
-    return await axios.get<any>(Config.Api.url + Config.Api.Endpoint.product, {
+    return axios.get<any>(Config.Api.url + Config.Api.Endpoint.product, {
       cancelToken,
       headers: {
         Authorization: bearer,

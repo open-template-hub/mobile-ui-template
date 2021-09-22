@@ -13,8 +13,6 @@ export default class CustomButton extends React.Component<Props> {
     super(props);
   }
 
-  componentDidMount() {}
-
   render() {
     const {onPress, title, disabled} = this.props;
     return (

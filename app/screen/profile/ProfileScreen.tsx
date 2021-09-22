@@ -1,14 +1,11 @@
 import React from 'react';
 import {View} from 'react-native';
 import {styles} from './profile.style';
-import {AnalyticsUtil} from '../../util/analytics.util';
-import {Screens} from '../../constant/screens.constant';
 import axios, {CancelTokenSource} from 'axios';
 import Profile from '../../component/profile/profile.component';
 import {UserController} from '../../contoller/user.controller';
 import {Storage} from '../../app.store';
 import {User} from '../../interface/user.interface';
-import {Auth} from '../../interface/auth.interface';
 import Loading from '../../component/loading/loading.component';
 import {Logger} from '../../util/logger.util';
 import {LogSeverity} from '../../enum/log-severity.enum';
@@ -41,8 +38,6 @@ export default class ProfileScreen extends React.Component<Props, State> {
 
   componentDidMount = () => {
     this._mounted = true;
-
-    AnalyticsUtil.log(Screens.Products);
 
     const {navigation} = this.props;
 
@@ -83,7 +78,7 @@ export default class ProfileScreen extends React.Component<Props, State> {
     if (auth != null) {
       try {
         const res = await this._userController.getMe(
-          auth as Auth,
+          auth,
           this._cancelTokenSource.token,
         );
         if (res && res.data && res.status === 200) {

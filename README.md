@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://opentemplatehub.com">
-    <img src="https://github.com/open-template-hub/open-template-hub.github.io/blob/master/assets/logo/user-interfaces/mobile-ui-logo.png?raw=true" alt="Logo" width=200>
+    <img src="https://raw.githubusercontent.com/open-template-hub/open-template-hub.github.io/master/assets/logo/ui/mobile-ui-logo.png" alt="Logo" width=200>
   </a>
 </p>
 
@@ -17,6 +17,12 @@ Open Template Hub - Mobile UI Template v2
 [![BTC](https://img.shields.io/badge/Donate-BTC-ORANGE?color=F5922F&style=for-the-badge&logo=bitcoin)](https://commerce.coinbase.com/checkout/8313af5f-de48-498d-b2cb-d98819ca7d5e)
 
 Mobile UI Template for generic usage in React Native
+
+<p align="center">
+  <a href="https://opentemplatehub.com">
+    <img src="https://raw.githubusercontent.com/open-template-hub/open-template-hub.github.io/master/assets/products/mobile-ui/demo.png" alt="Screenshot" width="800px">
+  </a>
+</p>
 
 ## Ways to Begin
 
@@ -152,3 +158,4 @@ Holds app utilizations
 ## LICENSE
 
 The source code for this project is released under the [MIT License](LICENSE).
+

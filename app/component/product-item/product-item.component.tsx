@@ -12,8 +12,6 @@ export default class ProductItem extends React.Component<Props> {
     super(props);
   }
 
-  componentDidMount() {}
-
   render() {
     const {product} = this.props;
 

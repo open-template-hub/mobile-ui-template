@@ -6,7 +6,7 @@ import {AuthController} from '../../contoller/auth.controller';
 import {AuthArgs} from '../../interface/auth-args.interface';
 import {Validation} from '../../util/validation.util';
 import {styles} from './sign-in.style';
-import Localization from '../../localization/i18n/i18n.localization';
+import Localization from '../../localization/i18n/Localization';
 import CustomInput from '../custom-input/custom-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import LabelButton from '../label-button/label-button.component';
@@ -106,7 +106,7 @@ export default class SignIn extends React.Component<Props, State> {
           ToastAndroid.BOTTOM,
         );
       }
-    } catch (e) {
+    } catch (e: any) {
       Alert.alert(Localization.t('signInErrorLabel'), e.message);
     } finally {
       main.setState({loading: false});
@@ -150,7 +150,7 @@ export default class SignIn extends React.Component<Props, State> {
 
         <View style={styles.actionButtonContainer}>
           <CustomButton
-            onPress={async () => await onClickLogin()}
+            onPress={() => onClickLogin()}
             disabled={loading}
             title={Localization.t('signIn')}
           />

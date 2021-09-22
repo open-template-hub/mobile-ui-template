@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import LabelButton from '../label-button/label-button.component';
 import {styles} from './sign-up-completed.style';
-import Localization from '../../localization/i18n/i18n.localization';
+import Localization from '../../localization/i18n/Localization';
 import {Screens} from '../../constant/screens.constant';
 
 interface Props {
@@ -14,14 +14,14 @@ export default class SignUpCompleted extends React.Component<Props> {
     super(props);
   }
 
-  componentDidMount() {}
-
   render() {
     const {navigation} = this.props;
     return (
       <>
         <View style={styles.messageContainer}>
-          <Text style={styles.messageText}>{Localization.t('signUpCompleted')}</Text>
+          <Text style={styles.messageText}>
+            {Localization.t('signUpCompleted')}
+          </Text>
         </View>
         <View style={styles.actionButtonContainer}>
           <LabelButton

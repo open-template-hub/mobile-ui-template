@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import SearchBox from '../search-box/search-box.component';
 import {styles} from './product-list.style';
-import Localization from '../../localization/i18n/i18n.localization';
+import Localization from '../../localization/i18n/Localization';
 import {Product} from '../../interface/product.interface';
 import ProductItem from '../product-item/product-item.component';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -31,8 +31,6 @@ export default class ProductList extends React.Component<Props, State> {
       filteredProducts: products,
     };
   }
-
-  componentDidMount() {}
 
   filterProducts = (text: string) => {
     const {products} = this.props;

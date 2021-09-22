@@ -19,23 +19,18 @@ export class Validation {
 
   validateUserName = (name: string) => {
     const regExp = /^[A-Za-z0-9]{6,}$/gm;
-    let found = regExp.test(name);
-    return found;
+    return regExp.test(name);
   };
 
   validateEmail = (email: string) => {
-    const regExp = new RegExp(
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    );
-    let found = regExp.test(email);
-    return found;
+    const regExp =
+      /^(([^<>()[]\\.,;:s@"]+(.[^<>()[]\\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
+    return regExp.test(email);
   };
 
   validatePassword = (password: string) => {
-    const regExp = new RegExp(
-      '^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})',
-    );
-    let found = regExp.test(password);
-    return found;
+    const regExp =
+      /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
+    return regExp.test(password);
   };
 }

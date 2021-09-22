@@ -16,7 +16,7 @@ export class PaymentController {
     });
     
     const bearer = 'Bearer ' + auth.accessToken;
-    return await axios.post<any>(
+    return axios.post<any>(
       Config.Api.url + Config.Api.Endpoint.subscription,
       JSON.stringify(args),
       {
