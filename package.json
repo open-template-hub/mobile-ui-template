@@ -12,7 +12,8 @@
     "ios": "react-native run-ios",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "outdated": "node dependency-checker.ts > docs/OUTDATED.md"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
