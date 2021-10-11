@@ -41,7 +41,7 @@
     "react-native-fbsdk": "3.0.0",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-google-signin": "^2.1.1",
-    "react-native-iap": "^5.2.0",
+    "react-native-iap": "^7.5.0",
     "react-native-image-picker": "^3.1.4",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-reanimated": "^2.2.2",
