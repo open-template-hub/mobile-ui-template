@@ -1,7 +1,7 @@
 {
   "name": "mobile-ui-template",
   "description": "Mobile UI Template for generic usage in React Native",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "license": "MIT",
   "scripts": {
     "android-debug": "npx react-native run-android --variant=debug",
