@@ -1,7 +1,7 @@
 {
   "name": "mobile-ui-template",
   "description": "Mobile UI Template for generic usage in React Native",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "license": "MIT",
   "scripts": {
     "android-debug": "npx react-native run-android --variant=debug",
@@ -12,7 +12,8 @@
     "ios": "react-native run-ios",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "outdated": "node dependency-checker.ts > docs/OUTDATED.md"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
