@@ -19,7 +19,7 @@ Mobile UI Template is a modern, responsive, and customizable mobile UI template 
 
 <p align="center">
   <a href="https://opentemplatehub.com">
-    <img src="https://raw.githubusercontent.com/open-template-hub/open-template-hub.github.io/master/assets/demo/ui/mobile-ui-demo-light.png" alt="Screenshot" width="300px">
+    <img src="https://raw.githubusercontent.com/open-template-hub/open-template-hub.github.io/master/assets/demo/ui/mobile-ui-ios-demo-light.png" alt="Screenshot" width="300px">
   </a>
 </p>
 
