@@ -13,8 +13,52 @@ Open Template Hub - Mobile UI Template v3
 
 Following packages are not updated in the develop branch yet. So, if you want to update outdated packages on your own risk, update the package.json and install dependencies.
 
-| Package             | Current   | Wanted   | Latest   | Location |
+| Package                                        | Current    | Wanted    | Latest   | Location |
 | --- | --- | --- | --- | --- |
+| @babel/core                                    | 7.12.16    | 7.16.0    | 7.16.0   | mobile-ui-template |
+| @babel/runtime                                 | 7.12.13    | 7.16.3    | 7.16.3   | mobile-ui-template |
+| @fortawesome/fontawesome-svg-core              |  1.2.34    | 1.2.36    | 1.2.36   | mobile-ui-template |
+| @fortawesome/free-brands-svg-icons             |  5.15.2    | 5.15.4    | 5.15.4   | mobile-ui-template |
+| @fortawesome/free-regular-svg-icons            |  5.15.2    | 5.15.4    | 5.15.4   | mobile-ui-template |
+| @fortawesome/free-solid-svg-icons              |  5.15.2    | 5.15.4    | 5.15.4   | mobile-ui-template |
+| @fortawesome/react-fontawesome                 |  0.1.14    | 0.1.16    | 0.1.16   | mobile-ui-template |
+| @fortawesome/react-native-fontawesome          |   0.2.6    |  0.2.7    |  0.2.7   | mobile-ui-template |
+| @invertase/react-native-apple-authentication   |   2.1.2    |  2.1.5    |  2.1.5   | mobile-ui-template |
+| @react-native-async-storage/async-storage      |  1.13.4  1 | .15.14  1 | .15.14   | mobile-ui-template |
+| @react-native-community/eslint-config          |   1.1.0    |  1.1.0    |  3.0.1   | mobile-ui-template |
+| @react-native-community/masked-view            |  0.1.10    | 0.1.11    | 0.1.11   | mobile-ui-template |
+| @react-native-firebase/admob                   |  10.8.0    | 10.8.1    | 11.5.0   | mobile-ui-template |
+| @react-native-firebase/app                     |  10.8.0    | 10.8.1    | 13.1.0   | mobile-ui-template |
+| @react-navigation/bottom-tabs                  |  5.11.7  5 | .11.15    |  6.0.9   | mobile-ui-template |
+| @react-navigation/drawer                       |  5.12.3    | 5.12.9    |  6.1.8   | mobile-ui-template |
+| @react-navigation/native                       |   5.9.2    |  5.9.8    |  6.0.6   | mobile-ui-template |
+| @react-navigation/stack                        |  5.14.2    | 5.14.9    | 6.0.11   | mobile-ui-template |
+| @types/i18n-js                                 |   3.8.0    |  3.8.2    |  3.8.2   | mobile-ui-template |
+| @types/jest                                    |  25.2.3    | 25.2.3    | 27.0.3   | mobile-ui-template |
+| @types/react                                   |  17.0.2  1 | 7.0.37  1 | 7.0.37   | mobile-ui-template |
+| @types/react-native                            | 0.63.50  0 | .63.57    | 0.66.9   | mobile-ui-template |
+| @types/react-native-fbsdk                      |   1.1.2    |  1.1.3    |  3.0.1   | mobile-ui-template |
+| @types/react-native-google-signin              |   1.0.2    |  1.0.3    |  1.0.3   | mobile-ui-template |
+| @types/react-test-renderer                     |  16.9.5    | 16.9.5    | 17.0.1   | mobile-ui-template |
+| @typescript-eslint/eslint-plugin               |  2.34.0    | 2.34.0    |  5.6.0   | mobile-ui-template |
+| @typescript-eslint/parser                      |  2.34.0    | 2.34.0    |  5.6.0   | mobile-ui-template |
+| axios                                          |  0.21.1    | 0.21.4    | 0.24.0   | mobile-ui-template |
+| babel-jest                                     |  25.5.1    | 25.5.1    | 27.4.4   | mobile-ui-template |
+| eslint                                         |   6.8.0    |  6.8.0    |  8.4.1   | mobile-ui-template |
+| jest                                           |  25.5.4    | 25.5.4    | 27.4.4   | mobile-ui-template |
+| metro-react-native-babel-preset                |  0.59.0    | 0.59.0    | 0.66.2   | mobile-ui-template |
+| react                                          | 16.13.1  1 | 6.13.1    | 17.0.2   | mobile-ui-template |
+| react-native                                   |  0.65.1    | 0.66.4    | 0.66.4   | mobile-ui-template |
+| react-native-animated-spinkit                  |   1.5.1    |  1.5.2    |  1.5.2   | mobile-ui-template |
+| react-native-gesture-handler                   |  1.10.1    | 1.10.3    |  2.1.0   | mobile-ui-template |
+| react-native-iap                               |   5.2.7    | 5.2.14    |  7.5.1   | mobile-ui-template |
+| react-native-image-picker                      |   3.2.1    |  3.8.1    |  4.6.0   | mobile-ui-template |
+| react-native-reanimated                        |  1.13.2    | 1.13.3    |  2.3.0   | mobile-ui-template |
+| react-native-safe-area-context                 |   3.1.9    |  3.3.2    |  3.3.2   | mobile-ui-template |
+| react-native-screens                           |  2.17.1    | 2.18.1    | 3.10.1   | mobile-ui-template |
+| react-native-svg                               |  12.1.0    | 12.1.1    | 12.1.1   | mobile-ui-template |
+| react-test-renderer                            | 16.13.1  1 | 6.13.1    | 17.0.2   | mobile-ui-template |
+| typescript                                     |   3.9.9    | 3.9.10    |  4.5.3   | mobile-ui-template |
 
 <table align="right"><tr><td><a href="https://opentemplatehub.com"><img src="https://raw.githubusercontent.com/open-template-hub/open-template-hub.github.io/master/assets/logo/brand-logo.png" width="50px" alt="oth"/></a></td><td><b>Open Template Hub © 2021</b></td></tr></table>
 
