@@ -5,7 +5,7 @@
 </p>
 
 <h1 align="center">
-Open Template Hub - Mobile UI Template v3
+Open Template Hub - Mobile UI Template v4
 </h1>
 
 [![License](https://img.shields.io/github/license/open-template-hub/mobile-ui-template?color=43b043&style=for-the-badge)](LICENSE)
